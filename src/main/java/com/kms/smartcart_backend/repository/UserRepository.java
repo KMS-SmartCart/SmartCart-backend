@@ -1,4 +1,4 @@
-package com.kms.smartcart_backend;
+package com.kms.smartcart_backend.repository;
 
 import com.kms.smartcart_backend.domain.User;
 import com.kms.smartcart_backend.domain.enums.SocialType;
