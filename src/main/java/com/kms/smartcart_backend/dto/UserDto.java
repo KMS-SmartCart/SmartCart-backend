@@ -33,7 +33,7 @@ public class UserDto {
         public Response(User entity) {
             this.userId = entity.getId();
             this.nickname = entity.getNickname();
-            this.socialType = entity.getSocialType();
+            this.savedMoney = entity.getSavedMoney();
             this.socialType = entity.getSocialType();
         }
     }

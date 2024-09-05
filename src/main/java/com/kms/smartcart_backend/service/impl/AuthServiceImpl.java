@@ -3,10 +3,13 @@ package com.kms.smartcart_backend.service.impl;
 import com.kms.smartcart_backend.domain.User;
 import com.kms.smartcart_backend.domain.enums.Role;
 import com.kms.smartcart_backend.dto.AuthDto;
+import com.kms.smartcart_backend.response.exception.Exception400;
 import com.kms.smartcart_backend.security.jwt.TokenProvider;
 import com.kms.smartcart_backend.service.AuthService;
 import com.kms.smartcart_backend.service.UserService;
+import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,5 +36,36 @@ public class AuthServiceImpl implements AuthService {
             tokenResponseDto = tokenProvider.generateAccessTokenByRefreshToken(userId, role, refreshToken);  // 오직 Access Token 하나만을 재발급.
         }
         return tokenResponseDto;  // 로그인 절차 완료. JWT 토큰 생성.
+    }
+
+    @Transactional
+    @Override
+    public AuthDto.TokenResponse reissue(AuthDto.ReissueRequest reissueRequestDto) {  // Refresh Token으로 Access Token 재발급 메소드
+
+        // RequestDto로 전달받은 Token값들
+        String accessToken = reissueRequestDto.getAccessToken();
+        String refreshToken = reissueRequestDto.getRefreshToken();
+
+        // Refresh Token 유효성 검사
+        if(tokenProvider.validateToken(refreshToken) == false) {
+            throw new JwtException("입력한 Refresh Token은 잘못된 토큰입니다.");
+        }
+
+        // Access Token에서 userId 가져오기
+        Authentication authentication = tokenProvider.getAuthentication(accessToken);
+        Long userId = Long.valueOf(authentication.getName());
+
+        // userId로 사용자 검색 & 해당 사용자의 role 가져오기
+        User user = userService.findUser(userId);
+        Role role = user.getRole();
+        String dbRefreshToken = user.getRefreshToken();
+
+        // DB의 사용자 Refresh Token 값과, 전달받은 Refresh Token의 불일치 여부 검사
+        if(dbRefreshToken == null || !(dbRefreshToken.equals(refreshToken))) {
+            throw new Exception400.TokenBadRequest("Refresh Token = " + refreshToken);
+        }
+
+        AuthDto.TokenResponse tokenResponseDto = tokenProvider.generateAccessTokenByRefreshToken(userId, role, refreshToken);
+        return tokenResponseDto;
     }
 }

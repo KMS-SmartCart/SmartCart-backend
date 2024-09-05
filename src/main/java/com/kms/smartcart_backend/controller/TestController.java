@@ -21,4 +21,10 @@ public class TestController {
     public ResponseEntity<ResponseData> healthCheck() {
         return ResponseData.toResponseEntity(ResponseCode.HEALTHY_SUCCESS);
     }
+
+    @GetMapping({"/", "/login", "/favicon.ico"})
+    @Operation(summary = "AWS - GET 리소스 및 리다이렉트 에러 방지 [JWT X]")  // No static resource 및 프론트엔드의 window.location.href='/login' 호출시 발생 에러 방지.
+    public ResponseEntity<ResponseData> preventGetError() {
+        return ResponseData.toResponseEntity(ResponseCode.PREVENT_GET_ERROR);
+    }
 }

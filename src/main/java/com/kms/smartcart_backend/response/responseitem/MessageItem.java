@@ -12,6 +12,8 @@ public class MessageItem {
     public static final String BAD_REQUEST_USER = "ERROR - 잘못된 회원 요청 에러";
 
     // < Auth >
+    public static final String PREVENT_GET_ERROR = "Status 204 - 리소스 및 리다이렉트 GET호출 에러 방지";
+
     public static final String UNAUTHORIZED = "ERROR - Unauthorized 에러";
     public static final String FORBIDDEN = "ERROR - Forbidden 에러";
 

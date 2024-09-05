@@ -45,6 +45,7 @@ public enum ResponseCode {
     // 기타 성공 응답
     HEALTHY_SUCCESS(StatusItem.OK, MessageItem.HEALTHY_SUCCESS),
     TEST_SUCCESS(StatusItem.OK, MessageItem.TEST_SUCCESS),
+    PREVENT_GET_ERROR(StatusItem.NO_CONTENT, MessageItem.PREVENT_GET_ERROR),
 
     // 기타 실패 응답
     anonymousUser_ERROR(StatusItem.UNAUTHORIZED, MessageItem.anonymousUser_ERROR),  // 401 Error
