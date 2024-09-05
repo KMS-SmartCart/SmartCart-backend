@@ -52,8 +52,12 @@ public class User implements Serializable {
     }
 
 
-    public void addSavedMoney(Integer addSavedMoney) {
-        this.savedMoney += addSavedMoney;
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void addSavedMoney(Integer savedMoney) {
+        this.savedMoney += savedMoney;
     }
 
     public void updateRefreshToken(String refreshToken) {
