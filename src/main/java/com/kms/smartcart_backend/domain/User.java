@@ -2,12 +2,15 @@ package com.kms.smartcart_backend.domain;
 
 import com.kms.smartcart_backend.domain.enums.Role;
 import com.kms.smartcart_backend.domain.enums.SocialType;
+import com.kms.smartcart_backend.util.StringListConverter;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -40,6 +43,10 @@ public class User implements Serializable {
 
     @Column(name = "refresh_token")
     private String refreshToken;
+
+    @Convert(converter = StringListConverter.class)  // DB에는 String으로 저장됨.
+    @Column(name = "check_list", columnDefinition = "TEXT")
+    private List<String> checkList = new ArrayList<>();  // 체크리스트
 
     // 여기는 이외의 타매핑 컬럼 작성할것.
 
