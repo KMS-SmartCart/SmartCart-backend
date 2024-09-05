@@ -3,6 +3,7 @@ package com.kms.smartcart_backend.service.impl;
 import com.kms.smartcart_backend.domain.User;
 import com.kms.smartcart_backend.domain.enums.Role;
 import com.kms.smartcart_backend.dto.AuthDto;
+import com.kms.smartcart_backend.repository.UserRepository;
 import com.kms.smartcart_backend.response.exception.Exception400;
 import com.kms.smartcart_backend.security.jwt.TokenProvider;
 import com.kms.smartcart_backend.service.AuthService;
@@ -13,11 +14,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
     private final UserService userService;
+    private final UserRepository userRepository;
     private final TokenProvider tokenProvider;
 
 
@@ -36,6 +40,18 @@ public class AuthServiceImpl implements AuthService {
             tokenResponseDto = tokenProvider.generateAccessTokenByRefreshToken(userId, role, refreshToken);  // 오직 Access Token 하나만을 재발급.
         }
         return tokenResponseDto;  // 로그인 절차 완료. JWT 토큰 생성.
+    }
+
+    @Transactional
+    @Override
+    public void withdrawal() {
+        User user = userService.findLoginUser();
+
+        // 자식 엔티티 삭제
+        // 여기에 delete 또는 batchDelete 차후 메소드 작성할것.
+
+        // 부모 엔티티인 User 삭제
+        userRepository.delete(user);
     }
 
     @Transactional
