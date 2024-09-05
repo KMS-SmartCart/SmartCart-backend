@@ -1,8 +1,15 @@
 package com.kms.smartcart_backend.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kms.smartcart_backend.security.jwt.JwtFilter;
+import com.kms.smartcart_backend.security.jwt.TokenProvider;
+import com.kms.smartcart_backend.security.jwt.handler.JwtAccessDeniedHandler;
+import com.kms.smartcart_backend.security.jwt.handler.JwtAuthenticationEntryPoint;
+import com.kms.smartcart_backend.security.jwt.handler.JwtExceptionFilter;
+import com.kms.smartcart_backend.security.oauth2.CustomOAuth2UserService;
+import com.kms.smartcart_backend.security.oauth2.handler.OAuth2LoginFailureHandler;
+import com.kms.smartcart_backend.security.oauth2.handler.OAuth2LoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -10,8 +17,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
@@ -20,7 +25,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Configuration
@@ -54,6 +58,8 @@ public class SecurityConfig {
                             .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                             .requestMatchers("/**").permitAll()  // Test 용도
+                            // .requestMatchers("/", "/error", "/favicon.ico", "/webjars/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger/**", "/health").permitAll()
+                            // .requestMatchers("/oauth2/**", "/reissue").permitAll()
 
                             .anyRequest().hasAnyAuthority("ROLE_USER", "ROLE_ADMIN");
                 })

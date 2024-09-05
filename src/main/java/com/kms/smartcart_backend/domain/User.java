@@ -21,6 +21,9 @@ public class User implements Serializable {
     @Column(name = "user_id")
     private Long id;
 
+    @Column(name = "email", unique = true)
+    private String email;
+
     private String nickname;
 
     @Column(name = "saved_money")
@@ -42,8 +45,9 @@ public class User implements Serializable {
 
 
     @Builder(builderClassName = "UserSaveBuilder", builderMethodName = "UserSaveBuilder")
-    public User(String nickname, String socialId, SocialType socialType) {
+    public User(String email, String nickname, String socialId, SocialType socialType) {
         // 이 빌더는 사용자 회원가입때만 사용할 용도 (refreshToken=null로 저장됨.)
+        this.email = email;
         this.nickname = nickname;
         this.savedMoney = 0;
         this.socialId = socialId;
