@@ -2,6 +2,7 @@ package com.kms.smartcart_backend.domain;
 
 import com.kms.smartcart_backend.domain.enums.Role;
 import com.kms.smartcart_backend.domain.enums.SocialType;
+import com.kms.smartcart_backend.dto.ProductDto;
 import com.kms.smartcart_backend.util.StringListConverter;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -10,7 +11,9 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
@@ -48,7 +51,8 @@ public class User implements Serializable {
     @Column(name = "check_list", columnDefinition = "TEXT")
     private List<String> checkList = new ArrayList<>();  // 체크리스트
 
-    // 여기는 이외의 타매핑 컬럼 작성할것.
+    @OneToMany(mappedBy = "user")  // User-Product 양방향매핑 (읽기 전용 필드)
+    private List<Product> productList = new ArrayList<>();  // 장바구니 상품리스트 (온라인 + 오프라인)
 
 
     @Builder(builderClassName = "UserSaveBuilder", builderMethodName = "UserSaveBuilder")
@@ -60,6 +64,7 @@ public class User implements Serializable {
         this.socialId = socialId;
         this.socialType = socialType;
         this.role = Role.ROLE_USER;
+        this.checkList = new ArrayList<>();  // 초기값 빈배열인 문자열 -> "__null__"
     }
 
 
@@ -73,5 +78,24 @@ public class User implements Serializable {
 
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+
+    // get online basket
+    public List<ProductDto.Response> getOnlineList() {
+        return this.productList.stream()
+                .filter(product -> product.getOnline() == 1)  // 온라인
+                .sorted(Comparator.comparing(Product::getId))  // id 기준 오름차순 정렬
+                .map(ProductDto.Response::new)  // DTO 변환
+                .collect(Collectors.toList());
+    }
+
+    // get offline basket
+    public List<ProductDto.Response> getOfflineList() {
+        return this.productList.stream()
+                .filter(product -> product.getOnline() == 0)  // 오프라인
+                .sorted(Comparator.comparing(Product::getId))  // id 기준 오름차순 정렬
+                .map(ProductDto.Response::new)  // DTO 변환
+                .collect(Collectors.toList());
     }
 }
