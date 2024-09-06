@@ -17,6 +17,18 @@ public class Exception400 extends CustomException {
         }
     }
 
+    public static class CheckitemBadRequest extends Exception400 {
+        public CheckitemBadRequest(String message) {
+            super(ResponseCode.BAD_REQUEST_CHECKITEM, message);
+        }
+    }
+
+    public static class ProductBadRequest extends Exception400 {
+        public ProductBadRequest(String message) {
+            super(ResponseCode.BAD_REQUEST_PRODUCT, message);
+        }
+    }
+
     public static class TokenBadRequest extends Exception400 {
         public TokenBadRequest(String message) {
             super(ResponseCode.BAD_REQUEST_TOKEN, message);

@@ -16,17 +16,17 @@ public class ProductDto {
     public static class Response {
 
         private Long productId;
-        private String name;
+        private String productName;
         private Integer price;
         private String amount;
         private String printName;  // 프론트엔드에서 사용자에게 출력해줄 이름 (상품명 + 용량)
 
         public Response(Product entity) {
             this.productId = entity.getId();
-            this.name = entity.getName();
+            this.productName = entity.getProductName();
             this.price = entity.getPrice();
             this.amount = entity.getAmount();
-            this.printName = String.format("%s %s", name, amount);
+            this.printName = String.format("%s %s", entity.getProductName(), entity.getAmount());
         }
     }
 }

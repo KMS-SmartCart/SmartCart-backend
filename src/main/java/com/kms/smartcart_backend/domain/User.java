@@ -2,8 +2,8 @@ package com.kms.smartcart_backend.domain;
 
 import com.kms.smartcart_backend.domain.enums.Role;
 import com.kms.smartcart_backend.domain.enums.SocialType;
+import com.kms.smartcart_backend.dto.CheckitemDto;
 import com.kms.smartcart_backend.dto.ProductDto;
-import com.kms.smartcart_backend.util.StringListConverter;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -47,9 +47,8 @@ public class User implements Serializable {
     @Column(name = "refresh_token")
     private String refreshToken;
 
-    @Convert(converter = StringListConverter.class)  // DB에는 String으로 저장됨.
-    @Column(name = "check_list", columnDefinition = "TEXT")
-    private List<String> checkList = new ArrayList<>();  // 체크리스트
+    @OneToMany(mappedBy = "user")  // User-Checkitem 양방향매핑 (읽기 전용 필드)
+    private List<Checkitem> checkitemList = new ArrayList<>();  // 체크리스트
 
     @OneToMany(mappedBy = "user")  // User-Product 양방향매핑 (읽기 전용 필드)
     private List<Product> productList = new ArrayList<>();  // 장바구니 상품리스트 (온라인 + 오프라인)
@@ -64,7 +63,6 @@ public class User implements Serializable {
         this.socialId = socialId;
         this.socialType = socialType;
         this.role = Role.ROLE_USER;
-        this.checkList = new ArrayList<>();  // 초기값 빈배열인 문자열 -> "__null__"
     }
 
 
@@ -80,6 +78,14 @@ public class User implements Serializable {
         this.refreshToken = refreshToken;
     }
 
+
+    // get all checkList
+    public List<CheckitemDto.Response> getCheckList() {
+        return this.checkitemList.stream()
+                .sorted(Comparator.comparing(Checkitem::getId))  // id 기준 오름차순 정렬
+                .map(CheckitemDto.Response::new)  // DTO 변환
+                .collect(Collectors.toList());
+    }
 
     // get online basket
     public List<ProductDto.Response> getOnlineList() {

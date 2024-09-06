@@ -16,4 +16,16 @@ public class Exception404 extends CustomException {
             super(ResponseCode.NOT_FOUND_USER, message);
         }
     }
+
+    public static class NoSuchCheckitem extends Exception404 {
+        public NoSuchCheckitem(String message) {
+            super(ResponseCode.NOT_FOUND_CHECKITEM, message);
+        }
+    }
+
+    public static class NoSuchProduct extends Exception404 {
+        public NoSuchProduct(String message) {
+            super(ResponseCode.NOT_FOUND_PRODUCT, message);
+        }
+    }
 }

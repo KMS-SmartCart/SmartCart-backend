@@ -20,7 +20,8 @@ public class Product {
     @Column(columnDefinition = "TINYINT(1) default 0", length = 1)
     private Integer online;  // 온라인(1) or 오프라인(0)
 
-    private String name;
+    @Column(name = "product_name")
+    private String productName;
 
     private Integer price;
 
@@ -32,11 +33,12 @@ public class Product {
 
 
     @Builder(builderClassName = "ProductSaveBuilder", builderMethodName = "ProductSaveBuilder")
-    public Product(Integer online, String name, Integer price, String amount) {
+    public Product(Integer online, String productName, Integer price, String amount, User user) {
         // 이 빌더는 장바구니 상품등록때만 사용할 용도
         this.online = online;
-        this.name = name;
+        this.productName = productName;
         this.price = price;
         this.amount = amount;
+        this.user = user;
     }
 }

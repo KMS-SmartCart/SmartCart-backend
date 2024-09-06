@@ -26,6 +26,30 @@ public enum ResponseCode {
 
     // ===================== //
 
+    // Checkitem 성공 응답
+    CREATED_CHECKITEM(StatusItem.CREATED, MessageItem.CREATED_CHECKITEM),
+    READ_CHECKITEM(StatusItem.OK, MessageItem.READ_CHECKITEM),
+    UPDATE_CHECKITEM(StatusItem.NO_CONTENT, MessageItem.UPDATE_CHECKITEM),
+    DELETE_CHECKITEM(StatusItem.NO_CONTENT, MessageItem.DELETE_CHECKITEM),
+
+    // Checkitem 실패 응답
+    NOT_FOUND_CHECKITEM(StatusItem.NOT_FOUND, MessageItem.NOT_FOUND_CHECKITEM),
+    BAD_REQUEST_CHECKITEM(StatusItem.BAD_REQUEST, MessageItem.BAD_REQUEST_CHECKITEM),
+
+    // ===================== //
+
+    // Product 성공 응답
+    CREATED_PRODUCT(StatusItem.CREATED, MessageItem.CREATED_PRODUCT),
+    READ_PRODUCT(StatusItem.OK, MessageItem.READ_PRODUCT),
+    UPDATE_PRODUCT(StatusItem.NO_CONTENT, MessageItem.UPDATE_PRODUCT),
+    DELETE_PRODUCT(StatusItem.NO_CONTENT, MessageItem.DELETE_PRODUCT),
+
+    // Product 실패 응답
+    NOT_FOUND_PRODUCT(StatusItem.NOT_FOUND, MessageItem.NOT_FOUND_PRODUCT),
+    BAD_REQUEST_PRODUCT(StatusItem.BAD_REQUEST, MessageItem.BAD_REQUEST_PRODUCT),
+
+    // ===================== //
+
     // Auth 실패 응답
     UNAUTHORIZED_ERROR(StatusItem.UNAUTHORIZED, MessageItem.UNAUTHORIZED),
     FORBIDDEN_ERROR(StatusItem.FORBIDDEN, MessageItem.FORBIDDEN),

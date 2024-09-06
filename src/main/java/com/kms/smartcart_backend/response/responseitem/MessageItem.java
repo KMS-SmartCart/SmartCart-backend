@@ -11,6 +11,24 @@ public class MessageItem {
     public static final String NOT_FOUND_USER = "ERROR - 존재하지 않는 회원 조회 에러";
     public static final String BAD_REQUEST_USER = "ERROR - 잘못된 회원 요청 에러";
 
+    // < Checkitem >
+    public static final String CREATED_CHECKITEM = "SUCCESS - 체크리스트 항목 생성 성공";
+    public static final String READ_CHECKITEM = "SUCCESS - 체크리스트 항목 조회 성공";
+    public static final String UPDATE_CHECKITEM = "SUCCESS - 체크리스트 항목 수정 성공";
+    public static final String DELETE_CHECKITEM = "SUCCESS - 체크리스트 항목 삭제 성공";
+
+    public static final String NOT_FOUND_CHECKITEM = "ERROR - 존재하지 않는 체크리스트 항목 조회 에러";
+    public static final String BAD_REQUEST_CHECKITEM = "ERROR - 잘못된 체크리스트 항목 요청 에러";
+
+    // < Product >
+    public static final String CREATED_PRODUCT = "SUCCESS - 장바구니 상품 생성 성공";
+    public static final String READ_PRODUCT = "SUCCESS - 장바구니 상품 조회 성공";
+    public static final String UPDATE_PRODUCT = "SUCCESS - 장바구니 상품 수정 성공";
+    public static final String DELETE_PRODUCT = "SUCCESS - 장바구니 상품 삭제 성공";
+
+    public static final String NOT_FOUND_PRODUCT = "ERROR - 존재하지 않는 장바구니 상품 조회 에러";
+    public static final String BAD_REQUEST_PRODUCT = "ERROR - 잘못된 장바구니 상품 요청 에러";
+
     // < Auth >
     public static final String PREVENT_GET_ERROR = "Status 204 - 리소스 및 리다이렉트 GET호출 에러 방지";
 

@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Converter
-public class StringListConverter implements AttributeConverter<List<String>, String> {
+public class StringListConverter implements AttributeConverter<List<String>, String> {  // 현재 사용 X.
 
     private static final String SPLIT_CHAR = "1p2p";  // 구분자 설정
 
