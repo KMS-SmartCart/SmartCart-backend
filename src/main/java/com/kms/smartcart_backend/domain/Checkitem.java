@@ -35,4 +35,13 @@ public class Checkitem {
         this.checkitemName = checkitemName;
         this.user = user;
     }
+
+
+    public void updateChecked(Integer checked) {
+        this.checked = checked;
+    }
+
+    public void updateCheckitemName(String checkitemName) {
+        this.checkitemName = checkitemName;
+    }
 }

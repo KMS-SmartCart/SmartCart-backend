@@ -8,6 +8,23 @@ public class CheckitemDto {
 
     // ======== < Request DTO > ======== //
 
+    @Getter
+    @NoArgsConstructor
+    public static class UpdateRequest {
+
+        private String beforeName;
+
+        private String afterName;
+        private Integer checked;
+    }
+
+    @Getter
+    @NoArgsConstructor
+    public static class DeleteRequest {
+
+        private String checkitemName;
+    }
+
 
     // ======== < Response DTO > ======== //
 
