@@ -9,6 +9,14 @@ public class ExternalDto {
 
     // ======== < Request DTO > ======== //
 
+    @Getter
+    @NoArgsConstructor
+    public static class NaverShoppingRequest {
+
+        private String productName;
+        private String amount;
+    }
+
 
     // ======== < Response DTO > ======== //
 
@@ -18,7 +26,7 @@ public class ExternalDto {
     @AllArgsConstructor
     public static class NaverShoppingResponse {
 
-        private String title;
+        private String productName;
         private String link;
         private Integer price;
         private String mallName;

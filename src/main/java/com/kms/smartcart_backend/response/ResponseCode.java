@@ -70,6 +70,8 @@ public enum ResponseCode {
     HEALTHY_SUCCESS(StatusItem.OK, MessageItem.HEALTHY_SUCCESS),
     TEST_SUCCESS(StatusItem.OK, MessageItem.TEST_SUCCESS),
     PREVENT_GET_ERROR(StatusItem.NO_CONTENT, MessageItem.PREVENT_GET_ERROR),
+    NAVER_SERVER_SUCCESS(StatusItem.OK, MessageItem.NAVER_SERVER_SUCCESS),
+    CHATGPT_SERVER_SUCCESS(StatusItem.OK, MessageItem.CHATGPT_SERVER_SUCCESS),
 
     // 기타 실패 응답
     anonymousUser_ERROR(StatusItem.UNAUTHORIZED, MessageItem.anonymousUser_ERROR),  // 401 Error

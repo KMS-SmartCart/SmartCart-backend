@@ -54,7 +54,7 @@ public class ExternalServiceImpl implements ExternalService {
                 // String brand = itemNode.path("brand").asText();
 
                 ExternalDto.NaverShoppingResponse naverShoppingResponseDto = ExternalDto.NaverShoppingResponse.builder()
-                        .title(title)
+                        .productName(title)
                         .link(link)
                         .price(lprice)
                         .mallName(mallName)

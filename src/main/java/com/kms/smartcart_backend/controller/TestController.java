@@ -39,10 +39,10 @@ public class TestController {
 
     // ========== Test 메소드 ========== //
 
-    @GetMapping("/test")
-    @Operation(summary = "Test API [JWT X]", description = "<strong>프론트엔드 사용 X</strong>")
-    public ResponseEntity<ResponseData<List<ExternalDto.NaverShoppingResponse>>> getTestResult() {
-        List<ExternalDto.NaverShoppingResponse> testResult = externalService.getLowPriceProducts("새송이 버섯");
-        return ResponseData.toResponseEntity(ResponseCode.TEST_SUCCESS, testResult);
-    }
+//    @GetMapping("/test")
+//    @Operation(summary = "Test API [JWT X]", description = "<strong>프론트엔드 사용 X</strong>")
+//    public ResponseEntity<ResponseData<List<ExternalDto.NaverShoppingResponse>>> getTestResult() {
+//        List<ExternalDto.NaverShoppingResponse> testResult = externalService.getLowPriceProducts("새송이 버섯");
+//        return ResponseData.toResponseEntity(ResponseCode.TEST_SUCCESS, testResult);
+//    }
 }

@@ -45,6 +45,8 @@ public class MessageItem {
     // < Etc >
     public static final String HEALTHY_SUCCESS = "SUCCESS - Health check 성공";
     public static final String TEST_SUCCESS = "SUCCESS - Test 성공";  // Test 임시 용도
+    public static final String NAVER_SERVER_SUCCESS = "SUCCESS - 네이버 쇼핑 API 호출 성공";
+    public static final String CHATGPT_SERVER_SUCCESS = "SUCCESS - ChatGPT API 호출 성공";
 
     public static final String anonymousUser_ERROR = "ERROR - anonymousUser 에러";  // 시큐리티 헤더의 로그인 정보가 없을때 값을 조회하면 발생.
     public static final String INTERNAL_SERVER_ERROR = "ERROR - 서버 내부 에러";
