@@ -1,6 +1,5 @@
 package com.kms.smartcart_backend.controller;
 
-import com.kms.smartcart_backend.dto.ExternalDto;
 import com.kms.smartcart_backend.response.ResponseCode;
 import com.kms.smartcart_backend.response.ResponseData;
 import com.kms.smartcart_backend.service.ExternalService;
@@ -11,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 // @Hidden
 @Tag(name = "Test")
