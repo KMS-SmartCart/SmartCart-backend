@@ -7,4 +7,5 @@ public interface UserService {
     User findUser(Long userId);
     User findLoginUser();
     UserDto.Response findUserProfile();
+    void updateUser(UserDto.UpdateRequest updateRequestDto);
 }

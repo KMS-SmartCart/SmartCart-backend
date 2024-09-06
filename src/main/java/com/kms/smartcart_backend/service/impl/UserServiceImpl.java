@@ -3,6 +3,7 @@ package com.kms.smartcart_backend.service.impl;
 import com.kms.smartcart_backend.domain.User;
 import com.kms.smartcart_backend.dto.UserDto;
 import com.kms.smartcart_backend.repository.UserRepository;
+import com.kms.smartcart_backend.response.exception.Exception400;
 import com.kms.smartcart_backend.response.exception.Exception404;
 import com.kms.smartcart_backend.service.UserService;
 import com.kms.smartcart_backend.util.SecurityUtil;
@@ -38,5 +39,17 @@ public class UserServiceImpl implements UserService {
         User user = findLoginUser();
         UserDto.Response userResponseDto = new UserDto.Response(user);
         return userResponseDto;
+    }
+
+    @Transactional
+    @Override
+    public void updateUser(UserDto.UpdateRequest updateRequestDto) {
+        User user = findLoginUser();
+        String nickname = updateRequestDto.getNickname();
+        Integer savedMoney = updateRequestDto.getSavedMoney();
+
+        if(nickname != null && savedMoney == null) user.updateNickname(nickname);
+        else if(nickname == null && savedMoney != null) user.addSavedMoney(savedMoney);
+        else throw new Exception400.UserBadRequest("잘못된 요청값으로 API를 요청하였습니다.");
     }
 }
