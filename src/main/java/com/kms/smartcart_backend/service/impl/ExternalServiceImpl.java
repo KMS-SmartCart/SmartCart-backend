@@ -3,14 +3,17 @@ package com.kms.smartcart_backend.service.impl;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kms.smartcart_backend.dto.ExternalDto;
+import com.kms.smartcart_backend.external.ChatgptClient;
 import com.kms.smartcart_backend.external.NaverShoppingClient;
 import com.kms.smartcart_backend.response.exception.Exception500;
 import com.kms.smartcart_backend.service.ExternalService;
+import com.kms.smartcart_backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -29,13 +32,28 @@ public class ExternalServiceImpl implements ExternalService {
     private static final Integer naverDisplay = 50;
     private static final String naverSort = "sim";
 
+    private final UserService userService;
+    private final ChatgptClient chatgptClient;
     private final NaverShoppingClient naverShoppingClient;
     private final ObjectMapper objectMapper;
 
 
     @Transactional
     @Override
+    public ExternalDto.ChatgptImageProcessingResponse getImageInfo(MultipartFile imageFile) {
+        userService.findLoginUser();  // 로그인 사용자의 DB 존재여부 확인.
+
+        // chatgptClient.callChatgptApiForImageProcessing(imageFile);
+        ExternalDto.ChatgptImageProcessingResponse chatgptImageProcessingResponseDto = null;
+
+        return chatgptImageProcessingResponseDto;
+    }
+
+    @Transactional
+    @Override
     public List<ExternalDto.NaverShoppingResponse> getLowPriceProducts(String query) {
+        userService.findLoginUser();  // 로그인 사용자의 DB 존재여부 확인.
+
         ResponseEntity<String> response = naverShoppingClient.callNaverShoppingApi(
                 naverClientId, naverClientSecret, query, naverDisplay, naverSort);  // 1차적으로는 정확도순으로 50가지를 조회함.
         String jsonResponse = response.getBody();

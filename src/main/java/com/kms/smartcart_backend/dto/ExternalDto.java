@@ -24,6 +24,17 @@ public class ExternalDto {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
+    public static class ChatgptImageProcessingResponse {
+
+        private String productName;
+        private Integer price;
+        private String amount;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class NaverShoppingResponse {
 
         private String productName;
