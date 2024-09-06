@@ -6,8 +6,14 @@ import lombok.Getter;
 @Getter
 public class Exception500 extends CustomException {
 
-    public Exception500(ResponseCode errorResponseCode) {
-        super(errorResponseCode, null);
+    public Exception500(ResponseCode errorResponseCode, String message) {
+        super(errorResponseCode, message);
     }
 
+
+    public static class ExternalServer extends Exception500 {
+        public ExternalServer(String message) {  // message값 = 외부 API 종류 기재할것.
+            super(ResponseCode.EXTERNAL_SERVER_ERROR, message);
+        }
+    }
 }

@@ -74,6 +74,7 @@ public enum ResponseCode {
     // 기타 실패 응답
     anonymousUser_ERROR(StatusItem.UNAUTHORIZED, MessageItem.anonymousUser_ERROR),  // 401 Error
     INTERNAL_SERVER_ERROR(StatusItem.INTERNAL_SERVER_ERROR, MessageItem.INTERNAL_SERVER_ERROR),  // 500 Error
+    EXTERNAL_SERVER_ERROR(StatusItem.INTERNAL_SERVER_ERROR, MessageItem.EXTERNAL_SERVER_ERROR),  // 500 Error
 
     // ===================== //
     ;

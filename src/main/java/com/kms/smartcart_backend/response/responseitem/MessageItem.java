@@ -48,4 +48,5 @@ public class MessageItem {
 
     public static final String anonymousUser_ERROR = "ERROR - anonymousUser 에러";  // 시큐리티 헤더의 로그인 정보가 없을때 값을 조회하면 발생.
     public static final String INTERNAL_SERVER_ERROR = "ERROR - 서버 내부 에러";
+    public static final String EXTERNAL_SERVER_ERROR = "ERROR - 외부 API 호출 에러";
 }
