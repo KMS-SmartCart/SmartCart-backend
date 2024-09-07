@@ -6,6 +6,7 @@ import com.kms.smartcart_backend.dto.ExternalDto;
 import com.kms.smartcart_backend.external.ChatgptClient;
 import com.kms.smartcart_backend.external.NaverShoppingClient;
 import com.kms.smartcart_backend.response.exception.Exception500;
+import com.kms.smartcart_backend.service.AwsS3Service;
 import com.kms.smartcart_backend.service.ExternalService;
 import com.kms.smartcart_backend.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -33,6 +35,7 @@ public class ExternalServiceImpl implements ExternalService {
     private static final String naverSort = "sim";
 
     private final UserService userService;
+    private final AwsS3Service awsS3Service;
     private final ChatgptClient chatgptClient;
     private final NaverShoppingClient naverShoppingClient;
     private final ObjectMapper objectMapper;
@@ -40,11 +43,17 @@ public class ExternalServiceImpl implements ExternalService {
 
     @Transactional
     @Override
-    public ExternalDto.ChatgptImageProcessingResponse getImageInfo(MultipartFile imageFile) {
+    public ExternalDto.ChatgptImageProcessingResponse getImageInfo(MultipartFile imageFile) throws IOException {
         userService.findLoginUser();  // 로그인 사용자의 DB 존재여부 확인.
+
+        // AWS S3 이미지 업로드 후 url 반환
+        String imageFileUrl = awsS3Service.uploadImage(imageFile);
 
         // chatgptClient.callChatgptApiForImageProcessing(imageFile);
         ExternalDto.ChatgptImageProcessingResponse chatgptImageProcessingResponseDto = null;
+
+        // AWS S3 이미지 삭제
+        awsS3Service.deleteImage(imageFileUrl);
 
         return chatgptImageProcessingResponseDto;
     }

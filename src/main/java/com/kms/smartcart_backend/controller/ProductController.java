@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Tag(name = "Product")
@@ -40,7 +41,7 @@ public class ProductController {
 
     @PostMapping(value = "/image-processing", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "스마트렌즈 과정 1 - ChatGPT API : 영상처리 상품 정보 도출 [JWT O]")
-    public ResponseEntity<ResponseData<ExternalDto.ChatgptImageProcessingResponse>> getImageInfo(@RequestPart(value="imageFile", required = true) MultipartFile imageFile) {
+    public ResponseEntity<ResponseData<ExternalDto.ChatgptImageProcessingResponse>> getImageInfo(@RequestPart(value="imageFile", required = true) MultipartFile imageFile) throws IOException {
         ExternalDto.ChatgptImageProcessingResponse ChatgptImageProcessingResponseDto = externalService.getImageInfo(imageFile);
         return ResponseData.toResponseEntity(ResponseCode.CHATGPT_SERVER_SUCCESS, ChatgptImageProcessingResponseDto);
     }
