@@ -2,7 +2,6 @@ package com.kms.smartcart_backend.domain;
 
 import com.kms.smartcart_backend.domain.enums.Role;
 import com.kms.smartcart_backend.domain.enums.SocialType;
-import com.kms.smartcart_backend.dto.CheckitemDto;
 import com.kms.smartcart_backend.dto.ProductDto;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -78,14 +77,6 @@ public class User implements Serializable {
         this.refreshToken = refreshToken;
     }
 
-
-    // get all checkList
-    public List<CheckitemDto.Response> getCheckList() {
-        return this.checkitemList.stream()
-                .sorted(Comparator.comparing(Checkitem::getId))  // id 기준 오름차순 정렬
-                .map(CheckitemDto.Response::new)  // DTO 변환
-                .collect(Collectors.toList());
-    }
 
     // get online basket
     public List<ProductDto.Response> getOnlineList() {

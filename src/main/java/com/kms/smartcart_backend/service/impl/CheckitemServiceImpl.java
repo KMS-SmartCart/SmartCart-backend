@@ -1,20 +1,27 @@
 package com.kms.smartcart_backend.service.impl;
 
 import com.kms.smartcart_backend.domain.Checkitem;
+import com.kms.smartcart_backend.domain.User;
 import com.kms.smartcart_backend.dto.CheckitemDto;
 import com.kms.smartcart_backend.repository.CheckitemRepository;
 import com.kms.smartcart_backend.response.exception.Exception400;
 import com.kms.smartcart_backend.response.exception.Exception404;
 import com.kms.smartcart_backend.service.CheckitemService;
+import com.kms.smartcart_backend.service.UserService;
 import com.kms.smartcart_backend.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class CheckitemServiceImpl implements CheckitemService {
 
+    private final UserService userService;
     private final CheckitemRepository checkitemRepository;
 
 
@@ -25,6 +32,16 @@ public class CheckitemServiceImpl implements CheckitemService {
         Checkitem checkitem = checkitemRepository.findByUser_IdAndCheckitemName(loginUserId, checkitemName).orElseThrow(
                 () -> new Exception404.NoSuchCheckitem(String.format("userId = %d & checkitemName = %s", loginUserId, checkitemName)));
         return checkitem;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<CheckitemDto.Response> findCheckList() {
+        User user = userService.findLoginUser();
+        return user.getCheckitemList().stream()
+                .sorted(Comparator.comparing(Checkitem::getId))  // id 기준 오름차순 정렬
+                .map(CheckitemDto.Response::new)  // DTO 변환
+                .collect(Collectors.toList());
     }
 
     @Transactional

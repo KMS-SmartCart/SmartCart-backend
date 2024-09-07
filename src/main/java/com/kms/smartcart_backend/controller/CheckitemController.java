@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Tag(name = "Checkitem")
 @RestController
 @RequiredArgsConstructor
@@ -18,6 +20,13 @@ public class CheckitemController {
 
     private final CheckitemService checkitemService;
 
+
+    @GetMapping  // 기본 URI path
+    @Operation(summary = "메인 Page - 체크리스트 조회 [JWT O]")
+    public ResponseEntity<ResponseData<List<CheckitemDto.Response>>> findCheckList() {
+        List<CheckitemDto.Response> checkitemResponseDtoList = checkitemService.findCheckList();
+        return ResponseData.toResponseEntity(ResponseCode.READ_CHECKITEM, checkitemResponseDtoList);
+    }
 
     @PutMapping  // 기본 URI path
     @Operation(summary = "메인 Page - 체크리스트 항목이름/체크여부 변경 [JWT O]",

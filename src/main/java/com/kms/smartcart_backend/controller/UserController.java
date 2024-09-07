@@ -20,7 +20,7 @@ public class UserController {
 
 
     @GetMapping  // 기본 URI path
-    @Operation(summary = "내정보 Page - 회원 정보 조회 [JWT O]")
+    @Operation(summary = "내정보 Page - 회원 프로필 조회 [JWT O]")
     public ResponseEntity<ResponseData<UserDto.Response>> findUserProfile() {
         UserDto.Response userResponseDto = userService.findUserProfile();
         return ResponseData.toResponseEntity(ResponseCode.READ_USER, userResponseDto);
