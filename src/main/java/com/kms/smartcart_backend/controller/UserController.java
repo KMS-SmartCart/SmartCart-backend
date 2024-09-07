@@ -8,10 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "User")
 @RestController
@@ -21,6 +18,13 @@ public class UserController {
 
     private final UserService userService;
 
+
+    @GetMapping  // 기본 URI path
+    @Operation(summary = "내정보 Page - 회원 정보 조회 [JWT O]")
+    public ResponseEntity<ResponseData<UserDto.Response>> findUserProfile() {
+        UserDto.Response userResponseDto = userService.findUserProfile();
+        return ResponseData.toResponseEntity(ResponseCode.READ_USER, userResponseDto);
+    }
 
     @PutMapping  // 기본 URI path
     @Operation(summary = "내정보 Page - 회원 닉네임 변경 [JWT O]")

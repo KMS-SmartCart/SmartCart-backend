@@ -22,7 +22,7 @@ public class AuthController {
 
 
     @DeleteMapping("/users")
-    @Operation(summary = "내정보 Page - 회원탈퇴 [JWT O]")
+    @Operation(summary = "내정보 Page - 회원 탈퇴 [JWT O]")
     public ResponseEntity<ResponseData> withdrawal() {
         authService.withdrawal();
         return ResponseData.toResponseEntity(ResponseCode.DELETE_USER);
