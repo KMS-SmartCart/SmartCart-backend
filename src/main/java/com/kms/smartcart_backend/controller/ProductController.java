@@ -34,7 +34,7 @@ public class ProductController {
     }
 
     @PostMapping("/lowest-price")
-    @Operation(summary = "스마트렌즈 과정 2 - Naver Shopping API : 최저가 상품 3가지 오름차순 조회 [JWT O]")
+    @Operation(summary = "스마트렌즈 과정 2 - Naver Shopping API : 최저가 온라인 상품 3가지 오름차순 조회 [JWT O]")
     public ResponseEntity<ResponseData<List<ExternalDto.NaverShoppingResponse>>> getLowPriceProducts(@RequestBody ExternalDto.NaverShoppingRequest naverShoppingRequestDto) {
         String searchQuery = String.format("%s %s", naverShoppingRequestDto.getProductName(), naverShoppingRequestDto.getAmount());  // 상품명 + 용량
         List<ExternalDto.NaverShoppingResponse> naverShoppingResponseDtoList = externalService.getLowPriceProducts(searchQuery);
