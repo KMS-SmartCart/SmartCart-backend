@@ -36,7 +36,9 @@ public class ProductDto {
         private String productName;
         private Integer price;
         private String amount;
-        private String printName;  // 프론트엔드에서 사용자에게 출력해줄 이름 (상품명 + 용량)
+
+        private String printName;  // 프론트엔드에서 사용자에게 보여줄 이름 문자열 (상품명 + 용량)
+        private String printPrice;  // 프론트엔드에서 사용자에게 보여줄 가격 문자열 (가격 + 원)
 
         public Response(Product entity) {
             this.productId = entity.getId();
@@ -44,7 +46,9 @@ public class ProductDto {
             this.productName = entity.getProductName();
             this.price = entity.getPrice();
             this.amount = entity.getAmount();
+
             this.printName = String.format("%s %s", entity.getProductName(), entity.getAmount());
+            this.printPrice = String.format("%d원", entity.getPrice());
         }
     }
 }
