@@ -77,6 +77,7 @@ public enum ResponseCode {
     anonymousUser_ERROR(StatusItem.UNAUTHORIZED, MessageItem.anonymousUser_ERROR),  // 401 Error
     INTERNAL_SERVER_ERROR(StatusItem.INTERNAL_SERVER_ERROR, MessageItem.INTERNAL_SERVER_ERROR),  // 500 Error
     EXTERNAL_SERVER_ERROR(StatusItem.INTERNAL_SERVER_ERROR, MessageItem.EXTERNAL_SERVER_ERROR),  // 500 Error
+    AWS_S3_ERROR(StatusItem.INTERNAL_SERVER_ERROR, MessageItem.AWS_S3_ERROR),  // 500 Error
 
     // ===================== //
     ;

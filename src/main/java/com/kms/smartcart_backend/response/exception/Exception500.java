@@ -16,4 +16,10 @@ public class Exception500 extends CustomException {
             super(ResponseCode.EXTERNAL_SERVER_ERROR, message);
         }
     }
+
+    public static class AwsS3Server extends Exception500 {
+        public AwsS3Server(String message) {
+            super(ResponseCode.AWS_S3_ERROR, message);
+        }
+    }
 }
