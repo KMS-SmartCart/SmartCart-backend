@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -30,18 +31,20 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDto.BasketResponse findBasket() {
         User user = userService.findLoginUser();
-        List<Product> productList = user.getProductList();
 
-        List<ProductDto.Response> offlineList = productList.stream()
-                .filter(product -> product.getIsOnline() == 0)  // 오프라인
-                .sorted(Comparator.comparing(Product::getId))  // id 기준 오름차순 정렬
-                .map(ProductDto.Response::new)  // DTO 변환
+        // id 기준 오름차순 정렬
+        List<Product> productList = user.getProductList().stream()
+                .sorted(Comparator.comparing(Product::getId))
                 .collect(Collectors.toList());
-        List<ProductDto.Response> onlineList = productList.stream()
-                .filter(product -> product.getIsOnline() == 1)  // 온라인
-                .sorted(Comparator.comparing(Product::getId))  // id 기준 오름차순 정렬
-                .map(ProductDto.Response::new)  // DTO 변환
-                .collect(Collectors.toList());
+
+        // 온라인 or 오프라인 분류
+        List<ProductDto.Response> offlineList = new ArrayList<>();
+        List<ProductDto.Response> onlineList = new ArrayList<>();
+        for(Product product : productList) {
+            ProductDto.Response productResponseDto = new ProductDto.Response(product);
+            if(product.getIsOnline() == 0) offlineList.add(productResponseDto);  // 오프라인
+            else onlineList.add(productResponseDto);  // 온라인
+        }
 
         return ProductDto.BasketResponse.builder()
                 .offlineList(offlineList)
