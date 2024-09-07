@@ -15,7 +15,7 @@ public class CheckitemDto {
         private String beforeName;
 
         private String afterName;
-        private Integer checked;
+        private Integer isCheck;
     }
 
     @Getter
@@ -33,12 +33,12 @@ public class CheckitemDto {
     public static class Response {
 
         private Long checkitemId;
-        private Integer checked;
+        private Integer isCheck;
         private String checkitemName;
 
         public Response(Checkitem entity) {
             this.checkitemId = entity.getId();
-            this.checked = entity.getChecked();
+            this.isCheck = entity.getIsCheck();
             this.checkitemName = entity.getCheckitemName();
         }
     }

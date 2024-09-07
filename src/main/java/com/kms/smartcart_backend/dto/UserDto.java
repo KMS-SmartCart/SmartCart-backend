@@ -13,9 +13,7 @@ public class UserDto {
     @NoArgsConstructor
     public static class UpdateRequest {
 
-        // 밑의 필드 둘중 하나는 반드시 null값임.
         private String nickname;
-        private Integer savedMoney;
     }
 
 

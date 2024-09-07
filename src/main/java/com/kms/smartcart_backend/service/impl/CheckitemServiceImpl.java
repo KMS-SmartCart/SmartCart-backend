@@ -32,12 +32,12 @@ public class CheckitemServiceImpl implements CheckitemService {
     public void updateCheckitem(CheckitemDto.UpdateRequest updateRequestDto) {
         String beforeName = updateRequestDto.getBeforeName();
         String afterName = updateRequestDto.getAfterName();
-        Integer checked = updateRequestDto.getChecked();
+        Integer isCheck = updateRequestDto.getIsCheck();
         Checkitem checkitem = findCheckitemByName(beforeName);  // (+ 로그인 체킹)
 
-        if(beforeName != null && afterName != null && checked == null) checkitem.updateCheckitemName(afterName);
-        else if(beforeName != null && afterName == null && checked != null) {
-            if(checked == 0 || checked == 1) checkitem.updateChecked(checked);
+        if(beforeName != null && afterName != null && isCheck == null) checkitem.updateCheckitemName(afterName);
+        else if(beforeName != null && afterName == null && isCheck != null) {
+            if(isCheck == 0 || isCheck == 1) checkitem.updateIsCheck(isCheck);
             else throw new Exception400.CheckitemBadRequest("잘못된 요청값으로 API를 요청하였습니다.");
         }
         else throw new Exception400.CheckitemBadRequest("잘못된 요청값으로 API를 요청하였습니다.");

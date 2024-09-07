@@ -17,8 +17,8 @@ public class Checkitem {
     @Column(name = "checkitem_id")
     private Long id;
 
-    @Column(columnDefinition = "TINYINT(1) default 0", length = 1)
-    private Integer checked;  // 체킹됨(1) or 체킹안됨(0)
+    @Column(name = "is_check", columnDefinition = "TINYINT(1) default 0", length = 1)
+    private Integer isCheck;  // 체킹(1) or 미체킹(0)
 
     @Column(name = "checkitem_name")
     private String checkitemName;
@@ -29,16 +29,16 @@ public class Checkitem {
 
 
     @Builder(builderClassName = "CheckitemSaveBuilder", builderMethodName = "CheckitemSaveBuilder")
-    public Checkitem(Integer checked, String checkitemName, User user) {
+    public Checkitem(Integer isCheck, String checkitemName, User user) {
         // 이 빌더는 체크리스트 아이템등록때만 사용할 용도
-        this.checked = checked;
+        this.isCheck = isCheck;
         this.checkitemName = checkitemName;
         this.user = user;
     }
 
 
-    public void updateChecked(Integer checked) {
-        this.checked = checked;
+    public void updateIsCheck(Integer isCheck) {
+        this.isCheck = isCheck;
     }
 
     public void updateCheckitemName(String checkitemName) {

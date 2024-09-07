@@ -90,7 +90,7 @@ public class User implements Serializable {
     // get online basket
     public List<ProductDto.Response> getOnlineList() {
         return this.productList.stream()
-                .filter(product -> product.getOnline() == 1)  // 온라인
+                .filter(product -> product.getIsOnline() == 1)  // 온라인
                 .sorted(Comparator.comparing(Product::getId))  // id 기준 오름차순 정렬
                 .map(ProductDto.Response::new)  // DTO 변환
                 .collect(Collectors.toList());
@@ -99,7 +99,7 @@ public class User implements Serializable {
     // get offline basket
     public List<ProductDto.Response> getOfflineList() {
         return this.productList.stream()
-                .filter(product -> product.getOnline() == 0)  // 오프라인
+                .filter(product -> product.getIsOnline() == 0)  // 오프라인
                 .sorted(Comparator.comparing(Product::getId))  // id 기준 오름차순 정렬
                 .map(ProductDto.Response::new)  // DTO 변환
                 .collect(Collectors.toList());

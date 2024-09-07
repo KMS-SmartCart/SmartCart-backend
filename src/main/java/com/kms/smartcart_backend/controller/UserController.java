@@ -23,13 +23,7 @@ public class UserController {
 
 
     @PutMapping  // 기본 URI path
-    @Operation(summary = "내정보 Page - 회원 닉네임 변경 or 아낀 총 금액 추가 [JWT O]",
-            description = """
-                - <strong>닉네임 변경</strong> : nickname = 변경할 닉네임 , savedMoney = null
-                - <strong>아낀 총 금액 추가</strong> : nickname = null , savedMoney = 새롭게 아낀 금액
-                - <strong>ERROR 1</strong> : nickname = null , savedMoney = null
-                - <strong>ERROR 2</strong> : nickname != null , savedMoney != null
-                """)
+    @Operation(summary = "내정보 Page - 회원 닉네임 변경 [JWT O]")
     public ResponseEntity<ResponseData> updateUser(@RequestBody UserDto.UpdateRequest updateRequestDto) {
         userService.updateUser(updateRequestDto);
         return ResponseData.toResponseEntity(ResponseCode.UPDATE_USER);
