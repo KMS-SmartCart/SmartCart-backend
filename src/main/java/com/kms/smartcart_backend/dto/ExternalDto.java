@@ -9,6 +9,17 @@ public class ExternalDto {
 
     // ======== < Request DTO > ======== //
 
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ChatgptImageProcessingRequest {
+
+        private String productName;
+        private Integer price;
+        private String amount;
+    }
+
     @Getter
     @NoArgsConstructor
     public static class NaverShoppingRequest {
