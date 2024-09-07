@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +25,29 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductBatchRepository productBatchRepository;
 
+
+    @Transactional(readOnly = true)
+    @Override
+    public ProductDto.BasketResponse findBasket() {
+        User user = userService.findLoginUser();
+        List<Product> productList = user.getProductList();
+
+        List<ProductDto.Response> offlineList = productList.stream()
+                .filter(product -> product.getIsOnline() == 0)  // 오프라인
+                .sorted(Comparator.comparing(Product::getId))  // id 기준 오름차순 정렬
+                .map(ProductDto.Response::new)  // DTO 변환
+                .collect(Collectors.toList());
+        List<ProductDto.Response> onlineList = productList.stream()
+                .filter(product -> product.getIsOnline() == 1)  // 온라인
+                .sorted(Comparator.comparing(Product::getId))  // id 기준 오름차순 정렬
+                .map(ProductDto.Response::new)  // DTO 변환
+                .collect(Collectors.toList());
+
+        return ProductDto.BasketResponse.builder()
+                .offlineList(offlineList)
+                .onlineList(onlineList)
+                .build();
+    }
 
     @Transactional
     @Override

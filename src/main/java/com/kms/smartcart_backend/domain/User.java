@@ -2,7 +2,6 @@ package com.kms.smartcart_backend.domain;
 
 import com.kms.smartcart_backend.domain.enums.Role;
 import com.kms.smartcart_backend.domain.enums.SocialType;
-import com.kms.smartcart_backend.dto.ProductDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,9 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
@@ -75,24 +72,5 @@ public class User implements Serializable {
 
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
-    }
-
-
-    // get online basket
-    public List<ProductDto.Response> getOnlineList() {
-        return this.productList.stream()
-                .filter(product -> product.getIsOnline() == 1)  // 온라인
-                .sorted(Comparator.comparing(Product::getId))  // id 기준 오름차순 정렬
-                .map(ProductDto.Response::new)  // DTO 변환
-                .collect(Collectors.toList());
-    }
-
-    // get offline basket
-    public List<ProductDto.Response> getOfflineList() {
-        return this.productList.stream()
-                .filter(product -> product.getIsOnline() == 0)  // 오프라인
-                .sorted(Comparator.comparing(Product::getId))  // id 기준 오름차순 정렬
-                .map(ProductDto.Response::new)  // DTO 변환
-                .collect(Collectors.toList());
     }
 }

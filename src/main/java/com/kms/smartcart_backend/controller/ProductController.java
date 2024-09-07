@@ -26,6 +26,18 @@ public class ProductController {
     private final ExternalService externalService;
 
 
+    @GetMapping  // 기본 URI path
+    @Operation(summary = "장바구니 Page - 장바구니 조회 [JWT O]",
+            description = """
+                    <strong>< 응답 필드 의미(예시) ></strong>
+                    - <strong>printName</strong> : 사용자에게 보여줄 이름 문자열 (상품명+용량 = "새송이버섯 300g")
+                    - <strong>printPrice</strong> : 사용자에게 보여줄 가격 문자열 (가격+원 = "1300원")
+                    """)
+    public ResponseEntity<ResponseData<ProductDto.BasketResponse>> findBasket() {
+        ProductDto.BasketResponse basketResponseDto = productService.findBasket();
+        return ResponseData.toResponseEntity(ResponseCode.READ_PRODUCT, basketResponseDto);
+    }
+
     @PostMapping(value = "/image-processing", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "스마트렌즈 과정 1 - ChatGPT API : 영상처리 상품 정보 도출 [JWT O]")
     public ResponseEntity<ResponseData<ExternalDto.ChatgptImageProcessingResponse>> getImageInfo(@RequestPart(value="imageFile", required = true) MultipartFile imageFile) {
@@ -44,7 +56,7 @@ public class ProductController {
     @PostMapping  // 기본 URI path
     @Operation(summary = "스마트렌즈 과정 3 - 온라인 및 오프라인 상품 장바구니에 담기 [JWT O]",
             description = """
-                    <strong>< 필드 의미(값) ></strong>
+                    <strong>< 요청 필드 의미(값) ></strong>
                     - <strong>selectType</strong> : 오프라인 상품 선택 or 온라인 상품 선택 (0 or 1)
                     - <strong>savedMoney</strong> : 선택 상품에 대한 아낀 금액 (밑에 명시한 계산법의 결과값)  \n
                     <strong>< 경우 및 계산법 ></strong>

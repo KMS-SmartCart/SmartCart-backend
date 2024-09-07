@@ -1,8 +1,12 @@
 package com.kms.smartcart_backend.dto;
 
 import com.kms.smartcart_backend.domain.Product;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 public class ProductDto {
 
@@ -50,5 +54,15 @@ public class ProductDto {
             this.printName = String.format("%s %s", entity.getProductName(), entity.getAmount());
             this.printPrice = String.format("%d원", entity.getPrice());
         }
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class BasketResponse {
+
+        private List<ProductDto.Response> offlineList;
+        private List<ProductDto.Response> onlineList;
     }
 }
