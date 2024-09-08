@@ -8,6 +8,7 @@ import com.kms.smartcart_backend.repository.ProductRepository;
 import com.kms.smartcart_backend.response.exception.Exception400;
 import com.kms.smartcart_backend.service.ProductService;
 import com.kms.smartcart_backend.service.UserService;
+import com.kms.smartcart_backend.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,10 +31,10 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     @Override
     public ProductDto.BasketResponse findBasket() {
-        User user = userService.findLoginUser();
+        Long loginUserId = SecurityUtil.getCurrentMemberId();
 
         // id 기준 오름차순 정렬
-        List<Product> productList = user.getProductList().stream()
+        List<Product> productList = productRepository.findAllByUser_Id(loginUserId).stream()
                 .sorted(Comparator.comparing(Product::getId))
                 .collect(Collectors.toList());
 

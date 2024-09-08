@@ -37,8 +37,10 @@ public class CheckitemServiceImpl implements CheckitemService {
     @Transactional(readOnly = true)
     @Override
     public List<CheckitemDto.Response> findCheckList() {
-        User user = userService.findLoginUser();
-        return user.getCheckitemList().stream()
+        Long loginUserId = SecurityUtil.getCurrentMemberId();
+        List<Checkitem> checkitemList = checkitemRepository.findAllByUser_Id(loginUserId);
+
+        return checkitemList.stream()
                 .sorted(Comparator.comparing(Checkitem::getId))  // id 기준 오름차순 정렬
                 .map(CheckitemDto.Response::new)  // DTO 변환
                 .collect(Collectors.toList());
