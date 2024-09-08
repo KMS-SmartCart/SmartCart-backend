@@ -70,4 +70,11 @@ public class ProductController {
         productService.saveInBasket(saveRequestDto);
         return ResponseData.toResponseEntity(ResponseCode.CREATED_PRODUCT);
     }
+
+    @DeleteMapping  // 기본 URI path
+    @Operation(summary = "장바구니 Page - 장바구니 전부 비우기 [JWT O]")
+    public ResponseEntity<ResponseData> deleteAllInBasket() {
+        productService.deleteAllInBasket();
+        return ResponseData.toResponseEntity(ResponseCode.DELETE_PRODUCT);
+    }
 }

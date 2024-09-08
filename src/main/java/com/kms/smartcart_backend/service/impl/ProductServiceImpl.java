@@ -55,11 +55,11 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     @Override
     public void saveInBasket(ProductDto.SaveRequest saveRequestDto) {
-        User loginUser = userService.findLoginUser();
+        User user = userService.findLoginUser();
 
         // 아낀 금액
         Integer savedMoney = saveRequestDto.getSavedMoney();
-        if(savedMoney != null && savedMoney > 0) loginUser.addSavedMoney(savedMoney);
+        if(savedMoney != null && savedMoney > 0) user.addSavedMoney(savedMoney);
         else throw new Exception400.ProductBadRequest("잘못된 요청값으로 API를 요청하였습니다.");
 
         // 선택 상품 (오프라인 or 온라인)
@@ -75,7 +75,7 @@ public class ProductServiceImpl implements ProductService {
                 .productName(saveRequestDto.getOfflineProductName())
                 .price(saveRequestDto.getOfflinePrice())
                 .amount(saveRequestDto.getOfflineAmount())
-                .user(loginUser)
+                .user(user)
                 .build();
         Product onlineProduct = Product.ProductSaveBuilder()
                 .isOnline(1)
@@ -83,10 +83,18 @@ public class ProductServiceImpl implements ProductService {
                 .productName(saveRequestDto.getOnlineProductName())
                 .price(saveRequestDto.getOnlinePrice())
                 .amount(saveRequestDto.getOnlineAmount())
-                .user(loginUser)
+                .user(user)
                 .build();
         List<Product> productList = Arrays.asList(offlineProduct, onlineProduct);
 
         productBatchRepository.batchInsert(productList);  // JDBC의 batch insert를 활용하여, 대용량 Batch 저장 처리. (DB 여러번 접근 방지 & 성능 향상)
+    }
+
+    @Transactional
+    @Override
+    public void deleteAllInBasket() {
+        User user = userService.findLoginUser();
+        List<Product> productList = user.getProductList();
+        productBatchRepository.batchDelete(productList);
     }
 }
