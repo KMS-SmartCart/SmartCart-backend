@@ -1,0 +1,71 @@
+name: Project CI/CD
+
+# < CI/CD 이전에 먼저 호출해야만 하는 목록 - postdeploy chmod 권한 부여 & submodule 최신화 >
+# git submodule update --remote
+# git add .
+# git commit -m "Setting: Git Submodule 최신화"
+# git push
+
+on:
+  push:
+    branches: [ main ]  # main 브랜치에 푸시할 때만 트리거됨
+  workflow_dispatch:  # Github UI 수동 실행도 가능
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      ### Set Up ###
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.SUBMODULE_GITHUB_TOKEN }}
+          submodules: true
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'adopt'
+
+      ### Gradle ###
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      ### Docker ###
+      - name: Docker build
+        run: |
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+          docker build -t smartcart-image .
+          docker tag smartcart-image sahyunjin/smartcart-image:latest
+          docker push sahyunjin/smartcart-image:latest
+
+      ### Time ###
+      - name: Get Current Time
+        uses: 1466587594/get-current-time@v2
+        id: current-ksttime
+        with:
+          format: YYYY-MM-DDTHH:mm:ss
+          utcOffset: "+09:00"  # KST time = UTC time + 9hour
+
+      ### ZIP file ###
+      - name: Generate deployment package
+        run: |
+          cp -r .ebextensions deploy/.ebextensions
+          cp Dockerrun.aws.json deploy/Dockerrun.aws.json
+          cd deploy && zip -r deploy.zip .
+
+      ### AWS Elastic Beanstalk ###
+      - name: Beanstalk Deploy
+        uses: einaregilsson/beanstalk-deploy@v20
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: Smartcart-backend
+          environment_name: Smartcart-backend-env
+          version_label: "github-action--${{ steps.current-ksttime.outputs.formattedTime }}"
+          region: ap-northeast-2
+          deployment_package: deploy/deploy.zip
+          wait_for_deployment: false
