@@ -31,3 +31,10 @@
 Prefix_종류: 구현_내용
 ex) Feat: Security 및 OAuth2 구현
 ```
+<br>
+
+## 👨‍👩‍👧‍👧 Team
+| [사현진](https://github.com/tkguswls1106) | [김희원](https://github.com/Joygarden425) | [목경민](https://github.com/mkm0630) |
+| :----------------------------------------: | :----------------------------------------: | :----------------------------------------: |
+| <img width = "300" src ="https://github.com/Dev-Race/DevRace-backend/assets/56509933/20a67908-ca87-49ea-aafc-60f306302429"> | <img width = "300" src ="https://github.com/user-attachments/assets/ae4ebddf-5a25-4ff4-9152-dcf15834f984"> | <img width = "300" src ="https://github.com/user-attachments/assets/3d95184b-90cf-4473-8170-7f050444219d"> |
+| FullStack Developer,<br>DevOps Engineer | Frontend Developer | Frontend Developer |
