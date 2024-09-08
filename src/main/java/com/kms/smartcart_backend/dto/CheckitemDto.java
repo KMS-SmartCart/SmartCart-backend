@@ -10,6 +10,13 @@ public class CheckitemDto {
 
     @Getter
     @NoArgsConstructor
+    public static class saveRequest {
+
+        private String checkitemName;
+    }
+
+    @Getter
+    @NoArgsConstructor
     public static class UpdateRequest {
 
         private String beforeName;

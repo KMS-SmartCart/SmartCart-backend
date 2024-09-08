@@ -46,6 +46,17 @@ public class CheckitemServiceImpl implements CheckitemService {
 
     @Transactional
     @Override
+    public void saveInCheckList(CheckitemDto.saveRequest saveRequestDto) {
+        User user = userService.findLoginUser();
+        Checkitem checkitem = Checkitem.CheckitemSaveBuilder()
+                .checkitemName(saveRequestDto.getCheckitemName())
+                .user(user)
+                .build();
+        checkitemRepository.save(checkitem);
+    }
+
+    @Transactional
+    @Override
     public void updateCheckitem(CheckitemDto.UpdateRequest updateRequestDto) {
         String beforeName = updateRequestDto.getBeforeName();
         String afterName = updateRequestDto.getAfterName();

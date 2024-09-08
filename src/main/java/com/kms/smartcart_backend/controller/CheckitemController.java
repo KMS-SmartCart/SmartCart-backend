@@ -28,6 +28,13 @@ public class CheckitemController {
         return ResponseData.toResponseEntity(ResponseCode.READ_CHECKITEM, checkitemResponseDtoList);
     }
 
+    @PostMapping  // 기본 URI path
+    @Operation(summary = "메인 Page - 체크리스트 항목 추가 [JWT O]", description = "<strong>!!! 주의사항</strong> : 체크리스트 항목 추가시, 기존 체크리스트에 이미 동일한 항목이름이 있다면 추가 불가능하도록 프론트엔드에서 막을 것 <strong>!!!</strong>")
+    public ResponseEntity<ResponseData> saveInCheckList(@RequestBody CheckitemDto.saveRequest saveRequestDto) {
+        checkitemService.saveInCheckList(saveRequestDto);
+        return ResponseData.toResponseEntity(ResponseCode.CREATED_CHECKITEM);
+    }
+
     @PutMapping  // 기본 URI path
     @Operation(summary = "메인 Page - 체크리스트 항목이름/체크여부 변경 [JWT O]",
             description = """

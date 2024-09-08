@@ -29,9 +29,9 @@ public class Checkitem {
 
 
     @Builder(builderClassName = "CheckitemSaveBuilder", builderMethodName = "CheckitemSaveBuilder")
-    public Checkitem(Integer isCheck, String checkitemName, User user) {
+    public Checkitem(String checkitemName, User user) {
         // 이 빌더는 체크리스트 아이템등록때만 사용할 용도
-        this.isCheck = isCheck;
+        this.isCheck = 0;
         this.checkitemName = checkitemName;
         this.user = user;
     }
