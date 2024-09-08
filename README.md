@@ -27,6 +27,10 @@ Frontend|Backend|Security&nbsp;&nbsp;&&nbsp;&nbsp;DB|Deployment|Other|
 
 ## 🤝 Git Convention
 
+### Branch
+- Backend 개발은 혼자 진행하므로, 단일 브랜치(main)를 사용한다.
+- `main` : 개발 및 배포 CI/CD용 branch
+
 ### Commit Prefix
 
 | 종류             | 내용                                             |
