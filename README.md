@@ -11,6 +11,7 @@
 </div>
 <br>
 
+
 ## 💡 Tech Stack
 Frontend|Backend|Security&nbsp;&nbsp;&&nbsp;&nbsp;DB|Deployment|Other|
 |:------:|:------:|:------:|:------:|:------:|
@@ -25,10 +26,23 @@ Frontend|Backend|Security&nbsp;&nbsp;&&nbsp;&nbsp;DB|Deployment|Other|
 ```
 <br>
 
+
+## 💻 Architecture
+
+### System
+![smartcart_architecture drawio](https://github.com/user-attachments/assets/f213288e-a42f-493a-9910-666b62f56de0)
+
+### Network
+![smartcart_network_architecture drawio](https://github.com/user-attachments/assets/a4faeb21-c58f-477a-86ff-910c570f78ea)
+
+<br>
+
+
 ## 🤝 Git Convention
 
 ### Branch
 - Backend 개발은 혼자 진행하므로, 단일 브랜치(main)를 사용한다.
+- 단, commit에 대한 prefix 규칙을 준수하도록 한다.
 - `main` : 개발 및 배포 CI/CD용 branch
 
 ### Commit Prefix
@@ -50,6 +64,7 @@ Prefix_종류: 구현_내용
 ex) Feat: Security 및 OAuth2 구현
 ```
 <br>
+
 
 ## 👨‍👩‍👧‍👧 Team
 | [사현진](https://github.com/tkguswls1106) | [김희원](https://github.com/Joygarden425) | [목경민](https://github.com/mkm0630) |
