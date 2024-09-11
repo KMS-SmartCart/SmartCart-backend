@@ -29,7 +29,7 @@ public class CheckitemController {
     }
 
     @PostMapping  // 기본 URI path
-    @Operation(summary = "메인 Page - 체크리스트 항목 추가 [JWT O]", description = "<strong>!!! 주의사항</strong> : 체크리스트 항목 추가시, 기존 체크리스트에 이미 동일한 항목이름이 있다면 추가 불가능하도록 프론트엔드에서 막을 것 <strong>!!!</strong>")
+    @Operation(summary = "메인 Page - 체크리스트 항목 추가 [JWT O]")
     public ResponseEntity<ResponseData> saveInCheckList(@RequestBody CheckitemDto.saveRequest saveRequestDto) {
         checkitemService.saveInCheckList(saveRequestDto);
         return ResponseData.toResponseEntity(ResponseCode.CREATED_CHECKITEM);
@@ -42,7 +42,7 @@ public class CheckitemController {
                 - <strong>체크여부 변경</strong> : checkitemName = null , isCheck = 변경할 체크여부 (0 or 1)
                 - <strong>ERROR 1</strong> : checkitemName = null , isCheck = null
                 - <strong>ERROR 2</strong> : checkitemName != null , isCheck != null
-                - <strong>ERROR 3</strong> : isCheck = 0 or 1 아닌 다른 숫자의 경우  \n\n<strong>!!! 주의사항</strong> : 체크리스트 항목이름 변경시, 기존 체크리스트에 이미 동일한 항목이름이 있다면 수정 불가능하도록 프론트엔드에서 막을 것 <strong>!!!</strong>
+                - <strong>ERROR 3</strong> : isCheck = 0 or 1 아닌 다른 숫자의 경우
                 """)
     public ResponseEntity<ResponseData> updateCheckitem(
             @PathVariable(value = "checkitemId") Long checkitemId,
