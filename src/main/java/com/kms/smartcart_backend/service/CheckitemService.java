@@ -6,9 +6,9 @@ import com.kms.smartcart_backend.dto.CheckitemDto;
 import java.util.List;
 
 public interface CheckitemService {
-    Checkitem findCheckitemByName(String checkitemName);
+    Checkitem findCheckitem(Long checkitemId);
     List<CheckitemDto.Response> findCheckList();
     void saveInCheckList(CheckitemDto.saveRequest saveRequestDto);
-    void updateCheckitem(CheckitemDto.UpdateRequest updateRequestDto);
-    void deleteCheckitem(CheckitemDto.DeleteRequest deleteRequestDto);
+    void updateCheckitem(Long checkitemId, CheckitemDto.UpdateRequest updateRequestDto);
+    void deleteCheckitem(Long checkitemId);
 }

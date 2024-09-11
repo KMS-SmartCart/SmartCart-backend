@@ -35,25 +35,26 @@ public class CheckitemController {
         return ResponseData.toResponseEntity(ResponseCode.CREATED_CHECKITEM);
     }
 
-    @PutMapping  // 기본 URI path
+    @PutMapping("/{checkitemId}")
     @Operation(summary = "메인 Page - 체크리스트 항목이름/체크여부 변경 [JWT O]",
             description = """
-                - <strong>항목이름 변경</strong> : beforeName = 기존 항목이름 , afterName = 변경할 항목이름 , isCheck = null
-                - <strong>체크여부 변경</strong> : beforeName = 기존 항목이름 , afterName = null , isCheck = 변경할 체크여부 (0 or 1)
-                - <strong>ERROR 1</strong> : beforeName = null
-                - <strong>ERROR 2</strong> : afterName = null , isCheck = null
-                - <strong>ERROR 3</strong> : afterName != null , isCheck != null
-                - <strong>ERROR 4</strong> : isCheck = 0 or 1 아닌 다른 숫자의 경우  \n\n<strong>!!! 주의사항</strong> : 체크리스트 항목이름 변경시, 기존 체크리스트에 이미 동일한 항목이름이 있다면 수정 불가능하도록 프론트엔드에서 막을 것 <strong>!!!</strong>
+                - <strong>항목이름 변경</strong> : checkitemName = 변경할 항목이름 , isCheck = null
+                - <strong>체크여부 변경</strong> : checkitemName = null , isCheck = 변경할 체크여부 (0 or 1)
+                - <strong>ERROR 1</strong> : checkitemName = null , isCheck = null
+                - <strong>ERROR 2</strong> : checkitemName != null , isCheck != null
+                - <strong>ERROR 3</strong> : isCheck = 0 or 1 아닌 다른 숫자의 경우  \n\n<strong>!!! 주의사항</strong> : 체크리스트 항목이름 변경시, 기존 체크리스트에 이미 동일한 항목이름이 있다면 수정 불가능하도록 프론트엔드에서 막을 것 <strong>!!!</strong>
                 """)
-    public ResponseEntity<ResponseData> updateCheckitem(@RequestBody CheckitemDto.UpdateRequest updateRequestDto) {
-        checkitemService.updateCheckitem(updateRequestDto);
+    public ResponseEntity<ResponseData> updateCheckitem(
+            @PathVariable(value = "checkitemId") Long checkitemId,
+            @RequestBody CheckitemDto.UpdateRequest updateRequestDto) {
+        checkitemService.updateCheckitem(checkitemId, updateRequestDto);
         return ResponseData.toResponseEntity(ResponseCode.UPDATE_CHECKITEM);
     }
 
-    @DeleteMapping  // 기본 URI path
+    @DeleteMapping("/{checkitemId}")
     @Operation(summary = "메인 Page - 체크리스트 항목 삭제 [JWT O]")
-    public ResponseEntity<ResponseData> deleteCheckitem(@RequestBody CheckitemDto.DeleteRequest deleteRequestDto) {
-        checkitemService.deleteCheckitem(deleteRequestDto);
+    public ResponseEntity<ResponseData> deleteCheckitem(@PathVariable(value = "checkitemId") Long checkitemId) {
+        checkitemService.deleteCheckitem(checkitemId);
         return ResponseData.toResponseEntity(ResponseCode.DELETE_CHECKITEM);
     }
 }

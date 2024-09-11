@@ -19,17 +19,8 @@ public class CheckitemDto {
     @NoArgsConstructor
     public static class UpdateRequest {
 
-        private String beforeName;
-
-        private String afterName;
-        private Integer isCheck;
-    }
-
-    @Getter
-    @NoArgsConstructor
-    public static class DeleteRequest {
-
         private String checkitemName;
+        private Integer isCheck;
     }
 
 

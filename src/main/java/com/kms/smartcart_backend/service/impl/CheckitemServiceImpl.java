@@ -27,10 +27,10 @@ public class CheckitemServiceImpl implements CheckitemService {
 
     @Transactional(readOnly = true)
     @Override
-    public Checkitem findCheckitemByName(String checkitemName) {
+    public Checkitem findCheckitem(Long checkitemId) {
         Long loginUserId = SecurityUtil.getCurrentMemberId();  // 로그인 사용자id 활용. (+ 로그인 체킹 용도)
-        Checkitem checkitem = checkitemRepository.findByUser_IdAndCheckitemName(loginUserId, checkitemName).orElseThrow(
-                () -> new Exception404.NoSuchCheckitem(String.format("userId = %d & checkitemName = %s", loginUserId, checkitemName)));
+        Checkitem checkitem = checkitemRepository.findByUser_IdAndId(loginUserId, checkitemId).orElseThrow(
+                () -> new Exception404.NoSuchCheckitem(String.format("userId = %d & checkitemId = %d", loginUserId, checkitemId)));
         return checkitem;
     }
 
@@ -59,14 +59,13 @@ public class CheckitemServiceImpl implements CheckitemService {
 
     @Transactional
     @Override
-    public void updateCheckitem(CheckitemDto.UpdateRequest updateRequestDto) {
-        String beforeName = updateRequestDto.getBeforeName();
-        String afterName = updateRequestDto.getAfterName();
+    public void updateCheckitem(Long checkitemId, CheckitemDto.UpdateRequest updateRequestDto) {
+        Checkitem checkitem = findCheckitem(checkitemId);  // (+ 로그인 체킹)
+        String checkitemName = updateRequestDto.getCheckitemName();
         Integer isCheck = updateRequestDto.getIsCheck();
-        Checkitem checkitem = findCheckitemByName(beforeName);  // (+ 로그인 체킹)
 
-        if(beforeName != null && afterName != null && isCheck == null) checkitem.updateCheckitemName(afterName);
-        else if(beforeName != null && afterName == null && isCheck != null) {
+        if(checkitemName != null && isCheck == null) checkitem.updateCheckitemName(checkitemName);
+        else if(checkitemName == null && isCheck != null) {
             if(isCheck == 0 || isCheck == 1) checkitem.updateIsCheck(isCheck);
             else throw new Exception400.CheckitemBadRequest("잘못된 요청값으로 API를 요청하였습니다.");
         }
@@ -75,8 +74,8 @@ public class CheckitemServiceImpl implements CheckitemService {
 
     @Transactional
     @Override
-    public void deleteCheckitem(CheckitemDto.DeleteRequest deleteRequestDto) {
-        Checkitem checkitem = findCheckitemByName(deleteRequestDto.getCheckitemName());  // (+ 로그인 체킹)
+    public void deleteCheckitem(Long checkitemId) {
+        Checkitem checkitem = findCheckitem(checkitemId);  // (+ 로그인 체킹)
         checkitemRepository.delete(checkitem);
     }
 }
