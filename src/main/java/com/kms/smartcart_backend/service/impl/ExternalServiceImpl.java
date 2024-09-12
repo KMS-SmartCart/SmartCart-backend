@@ -73,6 +73,7 @@ public class ExternalServiceImpl implements ExternalService {
                 amount = matcher.group(2);
                 price = Integer.parseInt(matcher.group(3));
                 if(amount.equals("없음")) amount = "";
+                if(productName.equals("없음")) productName = "";
                 else if(amount != null) amount = amount.replaceAll("\\s+", "");  // 용량 문자열 내의 모든 공백 제거
                 break;  // 정상적으로 문자열 추출이 되었으니, 무한 루프를 빠져나감.
             }
