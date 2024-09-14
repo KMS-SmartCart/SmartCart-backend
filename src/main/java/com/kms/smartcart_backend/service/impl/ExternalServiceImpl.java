@@ -61,7 +61,8 @@ public class ExternalServiceImpl implements ExternalService {
         String amount = null;  // 용량
         Integer price = null;  // 가격
 
-        while(true) {
+        int attemptCnt = 0;  // 호출 횟수 카운트
+        while(attemptCnt < 20) {
             // ChatGPT API 호출
             String answer = getChatgptAnswer(question, imageFileUrl);
 
@@ -75,10 +76,12 @@ public class ExternalServiceImpl implements ExternalService {
                 if(amount.equals("없음")) amount = "";
                 if(productName.equals("없음")) productName = "";
                 else if(amount != null) amount = amount.replaceAll("\\s+", "");  // 용량 문자열 내의 모든 공백 제거
-                break;  // 정상적으로 문자열 추출이 되었으니, 무한 루프를 빠져나감.
+                break;  // 정상적으로 문자열 추출이 되었으니, 반복문을 빠져나감.
             }
             // else : 대답 형식이 잘못되어 문자열 추출이 안되었으니, 다시 질문하여 결과 갱신.
+            attemptCnt++;
         }
+        if(attemptCnt >= 20) throw new Exception500.ExternalServer("ChatGPT API 호출 에러 (호출 제한횟수 초과)");
 
         ExternalDto.ChatgptImageProcessingResponse chatgptImageProcessingResponseDto = ExternalDto.ChatgptImageProcessingResponse.builder()
                 .productName(productName)
