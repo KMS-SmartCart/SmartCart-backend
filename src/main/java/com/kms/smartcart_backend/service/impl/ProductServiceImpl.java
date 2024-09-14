@@ -45,11 +45,11 @@ public class ProductServiceImpl implements ProductService {
             ProductDto.Response productResponseDto = new ProductDto.Response(product);
             if(product.getIsOnline() == 0) {  // 오프라인
                 offlineList.add(productResponseDto);
-                offlinePriceSum += product.getPrice();
+                if(product.getIsSelect() == 1) offlinePriceSum += product.getPrice();
             }
             else {  // 온라인
                 onlineList.add(productResponseDto);
-                onlinePriceSum += product.getPrice();
+                if(product.getIsSelect() == 1) onlinePriceSum += product.getPrice();
             }
         }
         allPriceSum = offlinePriceSum + onlinePriceSum;
