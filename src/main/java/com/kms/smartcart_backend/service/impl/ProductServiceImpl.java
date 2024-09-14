@@ -127,20 +127,17 @@ public class ProductServiceImpl implements ProductService {
     // ========== 유틸성 메소드 ========== //
 
     private static Integer calculateSavedMoney(Integer isSelectOffline, Integer offlinePrice, Integer onlinePrice) {
-        Integer savedMoney;
         if(isSelectOffline == 1) {
             // 오프라인 선택 && 오프라인 저렴 일때
-            if(offlinePrice < onlinePrice) savedMoney = onlinePrice - offlinePrice;
+            if(offlinePrice < onlinePrice) return onlinePrice - offlinePrice;
             // 오프라인 선택 && 오프라인 비쌈 일때
-            else savedMoney = 0;
+            else return 0;
         }
         else {
             // 온라인 선택 && 온라인 저렴 일때
-            if(offlinePrice > onlinePrice) savedMoney = offlinePrice - onlinePrice;
+            if(offlinePrice > onlinePrice) return offlinePrice - onlinePrice;
             // 온라인 선택 && 온라인 비쌈 일때
-            else savedMoney = 0;
+            else return 0;
         }
-
-        return savedMoney;
     }
 }
