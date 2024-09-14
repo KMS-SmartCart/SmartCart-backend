@@ -60,14 +60,17 @@ public class ProductServiceImpl implements ProductService {
 
         // 아낀 금액
         Integer savedMoney = saveRequestDto.getSavedMoney();
-        if(savedMoney != null && savedMoney > 0) user.addSavedMoney(savedMoney);
+        if(savedMoney != null) {
+            if(savedMoney > 0) user.addSavedMoney(savedMoney);
+            else if(savedMoney < 0) throw new Exception400.ProductBadRequest("잘못된 요청값으로 API를 요청하였습니다.");
+        }
         else throw new Exception400.ProductBadRequest("잘못된 요청값으로 API를 요청하였습니다.");
 
         // 선택 상품 (오프라인 or 온라인)
         Integer selectType = saveRequestDto.getSelectType();
         Integer isSelectOffline = 0, isSelectOnline = 0;
-        if(selectType == 0) isSelectOffline = 1;  // 선택한 항목이 오프라인 상품인 경우
-        else if(selectType == 1) isSelectOnline = 1;  // 선택한 항목이 온라인 상품인 경우
+        if(selectType != null && selectType == 0) isSelectOffline = 1;  // 선택한 항목이 오프라인 상품인 경우
+        else if(selectType != null && selectType == 1) isSelectOnline = 1;  // 선택한 항목이 온라인 상품인 경우
         else throw new Exception400.ProductBadRequest("잘못된 요청값으로 API를 요청하였습니다.");
 
         Product offlineProduct = Product.ProductSaveBuilder()
