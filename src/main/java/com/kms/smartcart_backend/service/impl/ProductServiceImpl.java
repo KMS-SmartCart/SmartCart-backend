@@ -39,17 +39,42 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
 
         // 온라인 or 오프라인 분류
-        List<ProductDto.Response> offlineList = new ArrayList<>();
-        List<ProductDto.Response> onlineList = new ArrayList<>();
+        List<ProductDto.Response> offlineList = new ArrayList<>(), onlineList = new ArrayList<>();
+        Integer offlinePriceSum = 0, onlinePriceSum = 0, allPriceSum = 0;
         for(Product product : productList) {
             ProductDto.Response productResponseDto = new ProductDto.Response(product);
-            if(product.getIsOnline() == 0) offlineList.add(productResponseDto);  // 오프라인
-            else onlineList.add(productResponseDto);  // 온라인
+            if(product.getIsOnline() == 0) {  // 오프라인
+                offlineList.add(productResponseDto);
+                offlinePriceSum += product.getPrice();
+            }
+            else {  // 온라인
+                onlineList.add(productResponseDto);
+                onlinePriceSum += product.getPrice();
+            }
+        }
+        allPriceSum = offlinePriceSum + onlinePriceSum;
+
+        // 절약한 총 금액 계산
+        Integer savedMoneySum = 0;
+        for(int i=0; i<offlineList.size(); i++) {
+            ProductDto.Response offlineDto = offlineList.get(i);
+            ProductDto.Response onlineDto = onlineList.get(i);
+
+            Integer isSelectOffline = offlineDto.getIsSelect();
+            Integer offlinePrice = offlineDto.getPrice();
+            Integer onlinePrice = onlineDto.getPrice();
+
+            Integer savedMoney = calculateSavedMoney(isSelectOffline, offlinePrice, onlinePrice);
+            savedMoneySum += savedMoney;
         }
 
         return ProductDto.BasketResponse.builder()
                 .offlineList(offlineList)
                 .onlineList(onlineList)
+                .offlinePriceSum(offlinePriceSum)
+                .onlinePriceSum(onlinePriceSum)
+                .allPriceSum(allPriceSum)
+                .savedMoneySum(savedMoneySum)
                 .build();
     }
 
@@ -58,20 +83,16 @@ public class ProductServiceImpl implements ProductService {
     public void saveInBasket(ProductDto.SaveRequest saveRequestDto) {
         User user = userService.findLoginUser();
 
-        // 아낀 금액
-        Integer savedMoney = saveRequestDto.getSavedMoney();
-        if(savedMoney != null) {
-            if(savedMoney > 0) user.addSavedMoney(savedMoney);
-            else if(savedMoney < 0) throw new Exception400.ProductBadRequest("잘못된 요청값으로 API를 요청하였습니다.");
-        }
-        else throw new Exception400.ProductBadRequest("잘못된 요청값으로 API를 요청하였습니다.");
-
         // 선택 상품 (오프라인 or 온라인)
         Integer selectType = saveRequestDto.getSelectType();
         Integer isSelectOffline = 0, isSelectOnline = 0;
         if(selectType != null && selectType == 0) isSelectOffline = 1;  // 선택한 항목이 오프라인 상품인 경우
         else if(selectType != null && selectType == 1) isSelectOnline = 1;  // 선택한 항목이 온라인 상품인 경우
         else throw new Exception400.ProductBadRequest("잘못된 요청값으로 API를 요청하였습니다.");
+
+        // 아낀 금액
+        Integer savedMoney = calculateSavedMoney(isSelectOffline, saveRequestDto.getOfflinePrice(), saveRequestDto.getOnlinePrice());
+        if(savedMoney > 0) user.addSavedMoney(savedMoney);
 
         Product offlineProduct = Product.ProductSaveBuilder()
                 .isOnline(0)
@@ -100,5 +121,26 @@ public class ProductServiceImpl implements ProductService {
         User user = userService.findLoginUser();
         List<Product> productList = user.getProductList();
         productBatchRepository.batchDelete(productList);
+    }
+
+
+    // ========== 유틸성 메소드 ========== //
+
+    private static Integer calculateSavedMoney(Integer isSelectOffline, Integer offlinePrice, Integer onlinePrice) {
+        Integer savedMoney;
+        if(isSelectOffline == 1) {
+            // 오프라인 선택 && 오프라인 저렴 일때
+            if(offlinePrice < onlinePrice) savedMoney = onlinePrice - offlinePrice;
+            // 오프라인 선택 && 오프라인 비쌈 일때
+            else savedMoney = 0;
+        }
+        else {
+            // 온라인 선택 && 온라인 저렴 일때
+            if(offlinePrice > onlinePrice) savedMoney = offlinePrice - onlinePrice;
+            // 온라인 선택 && 온라인 비쌈 일때
+            else savedMoney = 0;
+        }
+
+        return savedMoney;
     }
 }

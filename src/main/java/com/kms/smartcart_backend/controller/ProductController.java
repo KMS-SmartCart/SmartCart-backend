@@ -32,7 +32,10 @@ public class ProductController {
             description = """
                     <strong>< 응답 필드 의미(예시) ></strong>
                     - <strong>printName</strong> : 사용자에게 보여줄 이름 문자열 (상품명+용량 = "새송이버섯 300g")
-                    - <strong>printPrice</strong> : 사용자에게 보여줄 가격 문자열 (가격+원 = "1300원")
+                    - <strong>offlinePriceSum</strong> : 오프라인 장바구니의 총 가격
+                    - <strong>onlinePriceSum</strong> : 온라인 장바구니의 총 가격
+                    - <strong>onlinePriceSum</strong> : 모든 장바구니의 총 가격
+                    - <strong>savedMoneySum</strong> : 절약한 총 금액
                     """)
     public ResponseEntity<ResponseData<ProductDto.BasketResponse>> findBasket() {
         ProductDto.BasketResponse basketResponseDto = productService.findBasket();
@@ -58,13 +61,12 @@ public class ProductController {
     @Operation(summary = "스마트렌즈 과정 3 - 온라인 및 오프라인 상품 장바구니에 담기 [JWT O]",
             description = """
                     <strong>< 요청 필드 의미(값) ></strong>
-                    - <strong>selectType</strong> : 오프라인 상품 선택 or 온라인 상품 선택 (0 or 1)
-                    - <strong>savedMoney</strong> : 선택 상품에 대한 아낀 금액 (밑에 명시한 계산법의 결과값)  \n
-                    <strong>< 경우 및 계산법 ></strong>
-                    - <strong>오프라인 선택 & 오프라인 저렴</strong> : 온라인 장바구니 = 온라인 3가지중 최저가 상품 , 오프라인 장바구니 = 선택한 오프라인 상품 , savedMoney = 두 상품의 가격 차이
-                    - <strong>오프라인 선택 & 오프라인 비쌈</strong> : 온라인 장바구니 = 온라인 3가지중 최저가 상품 , 오프라인 장바구니 = 선택한 오프라인 상품 , savedMoney = 0
-                    - <strong>온라인 선택 & 온라인 저렴</strong> : 온라인 장바구니 = 선택한 온라인 상품 , 오프라인 장바구니 = 기존 오프라인 상품 , savedMoney = 두 상품의 가격 차이
-                    - <strong>온라인 선택 & 온라인 비쌈</strong> : 온라인 장바구니 = 선택한 온라인 상품 , 오프라인 장바구니 = 기존 오프라인 상품 , savedMoney = 0  \n\n<strong>!!! 주의사항</strong> : savedMoney 값은 프론트엔드에서 계산할 것 <strong>!!!</strong>
+                    - <strong>selectType</strong> : 오프라인 상품 선택 or 온라인 상품 선택 (0 or 1)  \n
+                    <strong>< 요청 데이터 선별법 ></strong>
+                    - <strong>오프라인 선택 & 오프라인 저렴</strong> : 온라인 장바구니 = 온라인 3가지중 최저가 상품 , 오프라인 장바구니 = 선택한 오프라인 상품 
+                    - <strong>오프라인 선택 & 오프라인 비쌈</strong> : 온라인 장바구니 = 온라인 3가지중 최저가 상품 , 오프라인 장바구니 = 선택한 오프라인 상품
+                    - <strong>온라인 선택 & 온라인 저렴</strong> : 온라인 장바구니 = 선택한 온라인 상품 , 오프라인 장바구니 = 기존 오프라인 상품
+                    - <strong>온라인 선택 & 온라인 비쌈</strong> : 온라인 장바구니 = 선택한 온라인 상품 , 오프라인 장바구니 = 기존 오프라인 상품
                     """)
     public ResponseEntity<ResponseData> saveInBasket(@RequestBody ProductDto.SaveRequest saveRequestDto) {
         productService.saveInBasket(saveRequestDto);

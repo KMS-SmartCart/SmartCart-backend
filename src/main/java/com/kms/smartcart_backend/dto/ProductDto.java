@@ -17,7 +17,6 @@ public class ProductDto {
     public static class SaveRequest {
 
         private Integer selectType;  // 오프라인 상품 선택(0) or 온라인 상품 선택(1)
-        private Integer savedMoney;  // 아낀 금액 (Swagger API 명세서 설명에 작성하겠음.)
 
         private String offlineProductName;
         private Integer offlinePrice;
@@ -42,7 +41,6 @@ public class ProductDto {
         private String amount;
 
         private String printName;  // 프론트엔드에서 사용자에게 보여줄 이름 문자열 (상품명 + 용량)
-        private String printPrice;  // 프론트엔드에서 사용자에게 보여줄 가격 문자열 (가격 + 원)
 
         public Response(Product entity) {
             this.productId = entity.getId();
@@ -52,7 +50,6 @@ public class ProductDto {
             this.amount = entity.getAmount();
 
             this.printName = String.format("%s %s", entity.getProductName(), entity.getAmount());
-            this.printPrice = String.format("%d원", entity.getPrice());
         }
     }
 
@@ -64,5 +61,10 @@ public class ProductDto {
 
         private List<ProductDto.Response> offlineList;
         private List<ProductDto.Response> onlineList;
+
+        private Integer offlinePriceSum;
+        private Integer onlinePriceSum;
+        private Integer allPriceSum;
+        private Integer savedMoneySum;
     }
 }
