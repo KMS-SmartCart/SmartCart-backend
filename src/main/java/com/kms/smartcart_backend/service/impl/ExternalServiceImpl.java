@@ -83,6 +83,8 @@ public class ExternalServiceImpl implements ExternalService {
         }
         if(attemptCnt >= 20) throw new Exception500.ExternalServer("ChatGPT API 호출 에러 (호출 제한횟수 초과)");
 
+        System.out.println(String.format("productName : %s / amount : %s / price : %d", productName, amount, price));
+
         ExternalDto.ChatgptImageProcessingResponse chatgptImageProcessingResponseDto = ExternalDto.ChatgptImageProcessingResponse.builder()
                 .productName(productName)
                 .price(price)
