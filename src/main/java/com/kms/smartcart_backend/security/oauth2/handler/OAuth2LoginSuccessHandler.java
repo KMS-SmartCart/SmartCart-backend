@@ -51,13 +51,11 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
     }
 
     public String makeRedirectUrl(AuthDto.TokenResponse tokenResponseDto) {
-        String frontendUrl = "http://localhost:3000";  // "https://www.smartcart.kr"
+        String frontendUrl = "https://www.smartcart.kr";  // "http://localhost:3000"
         frontendUrl += "/main";
 
         String redirectUrl = UriComponentsBuilder.fromUriString(frontendUrl)  // 프론트엔드 url
-                // .queryParam("grantType", tokenResponseDto.getGrantType())
                 .queryParam("accessToken", tokenResponseDto.getAccessToken())
-                // .queryParam("accessTokenExpiresIn", tokenResponseDto.getAccessTokenExpiresIn())
                 .queryParam("refreshToken", tokenResponseDto.getRefreshToken())
                 .build().toUriString();
         return redirectUrl;
