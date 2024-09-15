@@ -67,15 +67,15 @@ public class ExternalServiceImpl implements ExternalService {
             String answer = getChatgptAnswer(question, imageFileUrl);
 
             // 대답 텍스트 파싱
-            Pattern pattern = Pattern.compile("상품명: (.*?), 용량: (.*?), 가격: (\\d+)");
+            Pattern pattern = Pattern.compile("상품명: (.*?), 용량: (.*), 가격: (\\d+)");
             Matcher matcher = pattern.matcher(answer);
             if(matcher.find()) {
                 productName = matcher.group(1);
                 amount = matcher.group(2);
                 price = Integer.parseInt(matcher.group(3));
                 if(amount.equals("없음")) amount = "";
-                if(productName.equals("없음")) productName = "";
                 else if(amount != null) amount = amount.replaceAll("\\s+", "");  // 용량 문자열 내의 모든 공백 제거
+                if(productName.equals("없음")) productName = "";
                 break;  // 정상적으로 문자열 추출이 되었으니, 반복문을 빠져나감.
             }
             // else : 대답 형식이 잘못되어 문자열 추출이 안되었으니, 다시 질문하여 결과 갱신.
@@ -109,19 +109,19 @@ public class ExternalServiceImpl implements ExternalService {
             JsonNode itemsNode = jsonNode.path("items");
             List<ExternalDto.NaverShoppingResponse> naverShoppingResponseDtoList = new ArrayList<>();
 
-            for (JsonNode itemNode : itemsNode) {
+            for(JsonNode itemNode : itemsNode) {
                 String title = itemNode.path("title").asText().replaceAll("<[^>]*>", "").trim();  // HTML 태그 제거
                 String link = itemNode.path("link").asText();
                 Integer lprice = itemNode.path("lprice").asInt();
                 String mallName = itemNode.path("mallName").asText();
-                // String maker = itemNode.path("maker").asText();
-                // String brand = itemNode.path("brand").asText();
 
                 ExternalDto.NaverShoppingResponse naverShoppingResponseDto = ExternalDto.NaverShoppingResponse.builder()
                         .productName(title)
                         .link(link)
                         .price(lprice)
                         .mallName(mallName)
+                        .amount(null)
+                        .printName(null)
                         .build();
                 naverShoppingResponseDtoList.add(naverShoppingResponseDto);
             }
@@ -131,6 +131,43 @@ public class ExternalServiceImpl implements ExternalService {
                     .sorted(Comparator.comparingInt(ExternalDto.NaverShoppingResponse::getPrice))  // stable sort
                     .limit(3)
                     .collect(Collectors.toList());
+
+            for(ExternalDto.NaverShoppingResponse naverShoppingResponseDto : sortedNaverShoppingResponseDtoList) {
+
+                // 질문 텍스트 전처리
+                String question = String.format("'%s' ", naverShoppingResponseDto.getProductName())
+                        + "이 텍스트에서 상품명과 용량을 정확히 추출하여 '상품명: %s, 용량: %s' 형식으로 말해. "
+                        + "상품명은 핵심 정보만 남기고, 용량 정보는 없으면 '없음'으로 표시해.";
+
+                String productName = null;  // ChatGPT의 파싱으로 보다 간소화한 상품명
+                String amount = null;  // ChatGPT의 파싱으로 얻은 용량
+
+                int attemptCnt = 0;  // 호출 횟수 카운트
+                while(attemptCnt < 20) {
+                    // ChatGPT API 호출
+                    String answer = getChatgptAnswer(question, null);
+
+                    // 대답 텍스트 파싱
+                    Pattern pattern = Pattern.compile("상품명: (.*?), 용량: (.*)");
+                    Matcher matcher = pattern.matcher(answer);
+                    if(matcher.find()) {
+                        productName = matcher.group(1);
+                        amount = matcher.group(2);
+                        if(amount.equals("없음")) amount = "";
+                        else if(amount != null) amount = amount.replaceAll("\\s+", "");  // 용량 문자열 내의 모든 공백 제거
+                        if(productName.equals("없음")) productName = "";
+                        break;  // 정상적으로 문자열 추출이 되었으니, 반복문을 빠져나감.
+                    }
+                    // else : 대답 형식이 잘못되어 문자열 추출이 안되었으니, 다시 질문하여 결과 갱신.
+                    attemptCnt++;
+                }
+                if(attemptCnt >= 20) throw new Exception500.ExternalServer("ChatGPT API 호출 에러 (호출 제한횟수 초과)");
+
+                naverShoppingResponseDto.setProductName(productName);
+                naverShoppingResponseDto.setAmount(amount);
+                naverShoppingResponseDto.setPrintName(String.format("%s %s", productName, amount));  // printName : 프론트엔드에서 사용자에게 보여줄 이름 문자열 (상품명 + 용량)
+            }
+
             return sortedNaverShoppingResponseDtoList;
         } catch (Exception ex) {
             throw new Exception500.ExternalServer("네이버 쇼핑 API 호출 에러 (" + ex.getMessage() + ")");
@@ -149,10 +186,12 @@ public class ExternalServiceImpl implements ExternalService {
         // 메시지 구성
         Map<String, Object> message = new HashMap<>();
         message.put("role", "user");
-        message.put("content", List.of(
-                Map.of("type", "text", "text", question),
-                Map.of("type", "image_url", "image_url", Map.of("url", imageUrl))
-        ));
+
+        List<Map<String, Object>> contentList = new ArrayList<>();
+        contentList.add(Map.of("type", "text", "text", question));
+        if(imageUrl != null) contentList.add(Map.of("type", "image_url", "image_url", Map.of("url", imageUrl)));  // 이미지 파일이 있을때만 Vision 사용.
+
+        message.put("content", contentList);
         requestBody.put("messages", List.of(message));
 
         // 최대 토큰길이 구성
