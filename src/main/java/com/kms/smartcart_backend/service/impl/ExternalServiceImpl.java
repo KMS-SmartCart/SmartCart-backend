@@ -177,7 +177,7 @@ public class ExternalServiceImpl implements ExternalService {
 
     // ========== 유틸성 메소드 ========== //
 
-    private String getChatgptAnswer(String question, String imageUrl) {
+    private String getChatgptAnswer(String question, String imageUrl) {  // 'imageUrl != null'인 경우에만 영상처리에 해당.
 
         // ChatGPT 모델 구성
         Map<String, Object> requestBody = new HashMap<>();
@@ -199,7 +199,7 @@ public class ExternalServiceImpl implements ExternalService {
 
         // ChatGPT API 호출
         String headerApiKey = "Bearer " + apiKey;
-        ResponseEntity<String> response = chatgptClient.callChatgptApiForImageProcessing(headerApiKey, requestBody);
+        ResponseEntity<String> response = chatgptClient.callChatgptApi(headerApiKey, requestBody);
         String jsonResponse = response.getBody();
 
         try {

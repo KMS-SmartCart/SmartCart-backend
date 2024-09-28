@@ -14,7 +14,7 @@ public interface ChatgptClient {
 
     @Headers("Content-Type: application/json")
     @PostMapping("/chat/completions")
-    ResponseEntity<String> callChatgptApiForImageProcessing(
+    ResponseEntity<String> callChatgptApi(  // for Text & Vision
             @RequestHeader("Authorization") String apikey,
             @RequestBody Map<String, Object> requestBody
     );
