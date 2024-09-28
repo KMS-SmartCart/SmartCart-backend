@@ -2,7 +2,6 @@ package com.kms.smartcart_backend.controller;
 
 import com.kms.smartcart_backend.response.ResponseCode;
 import com.kms.smartcart_backend.response.ResponseData;
-import com.kms.smartcart_backend.service.ExternalService;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,9 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TestController {
 
-    private final ExternalService externalService;
-
-
     @GetMapping("/health")
     @Operation(summary = "AWS - 서버 헬스체크 [JWT X]", description = "<strong>프론트엔드 사용 X</strong>")
     public ResponseEntity<ResponseData> healthCheck() {
@@ -32,14 +28,4 @@ public class TestController {
     public ResponseEntity<ResponseData> preventGetError() {
         return ResponseData.toResponseEntity(ResponseCode.PREVENT_GET_ERROR);
     }
-
-
-    // ========== Test 메소드 ========== //
-
-//    @GetMapping("/test")
-//    @Operation(summary = "Test API [JWT X]", description = "<strong>프론트엔드 사용 X</strong>")
-//    public ResponseEntity<ResponseData<List<ExternalDto.NaverShoppingResponse>>> getTestResult() {
-//        List<ExternalDto.NaverShoppingResponse> testResult = externalService.getLowPriceProducts("새송이 버섯");
-//        return ResponseData.toResponseEntity(ResponseCode.TEST_SUCCESS, testResult);
-//    }
 }
