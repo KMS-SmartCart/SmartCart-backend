@@ -57,4 +57,11 @@ public class CheckitemController {
         checkitemService.deleteCheckitem(checkitemId);
         return ResponseData.toResponseEntity(ResponseCode.DELETE_CHECKITEM);
     }
+
+    @DeleteMapping  // 기본 URI path
+    @Operation(summary = "메인 Page - 체크리스트 전부 비우기 [JWT O]")
+    public ResponseEntity<ResponseData> deleteAllInCheckList() {
+        checkitemService.deleteAllInCheckList();
+        return ResponseData.toResponseEntity(ResponseCode.DELETE_CHECKITEM);
+    }
 }

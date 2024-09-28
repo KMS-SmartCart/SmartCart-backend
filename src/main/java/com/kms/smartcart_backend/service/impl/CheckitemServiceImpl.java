@@ -3,6 +3,7 @@ package com.kms.smartcart_backend.service.impl;
 import com.kms.smartcart_backend.domain.Checkitem;
 import com.kms.smartcart_backend.domain.User;
 import com.kms.smartcart_backend.dto.CheckitemDto;
+import com.kms.smartcart_backend.repository.CheckitemBatchRepository;
 import com.kms.smartcart_backend.repository.CheckitemRepository;
 import com.kms.smartcart_backend.response.exception.Exception400;
 import com.kms.smartcart_backend.response.exception.Exception404;
@@ -23,6 +24,7 @@ public class CheckitemServiceImpl implements CheckitemService {
 
     private final UserService userService;
     private final CheckitemRepository checkitemRepository;
+    private final CheckitemBatchRepository checkitemBatchRepository;
 
 
     @Transactional(readOnly = true)
@@ -77,5 +79,13 @@ public class CheckitemServiceImpl implements CheckitemService {
     public void deleteCheckitem(Long checkitemId) {
         Checkitem checkitem = findCheckitem(checkitemId);  // (+ 로그인 체킹)
         checkitemRepository.delete(checkitem);
+    }
+
+    @Transactional
+    @Override
+    public void deleteAllInCheckList() {
+        User user = userService.findLoginUser();
+        List<Checkitem> checkitemList = user.getCheckitemList();
+        checkitemBatchRepository.batchDelete(checkitemList);
     }
 }

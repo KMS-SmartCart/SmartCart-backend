@@ -11,4 +11,5 @@ public interface CheckitemService {
     void saveInCheckList(CheckitemDto.saveRequest saveRequestDto);
     void updateCheckitem(Long checkitemId, CheckitemDto.UpdateRequest updateRequestDto);
     void deleteCheckitem(Long checkitemId);
+    void deleteAllInCheckList();
 }
