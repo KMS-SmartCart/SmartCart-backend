@@ -62,37 +62,39 @@ public class ExternalServiceImpl implements ExternalService {
         Integer price = null;  // 가격
 
         int attemptCnt = 0;  // 호출 횟수 카운트
-        while(attemptCnt < 20) {
-            // ChatGPT API 호출
-            String answer = getChatgptAnswer(question, imageFileUrl);
+        try {
+            while(attemptCnt < 20) {
+                // ChatGPT API 호출
+                String answer = getChatgptAnswer(question, imageFileUrl);
 
-            // 대답 텍스트 파싱
-            Pattern pattern = Pattern.compile("상품명: (.*?), 용량: (.*), 가격: (\\d+)");
-            Matcher matcher = pattern.matcher(answer);
-            if(matcher.find()) {
-                productName = matcher.group(1);
-                amount = matcher.group(2);
-                price = Integer.parseInt(matcher.group(3));
-                if(amount.equals("없음")) amount = "";
-                else if(amount != null) amount = amount.replaceAll("\\s+", "");  // 용량 문자열 내의 모든 공백 제거
-                if(productName.equals("없음")) productName = "";
-                break;  // 정상적으로 문자열 추출이 되었으니, 반복문을 빠져나감.
+                // 대답 텍스트 파싱
+                Pattern pattern = Pattern.compile("상품명: (.*?), 용량: (.*), 가격: (\\d+)");
+                Matcher matcher = pattern.matcher(answer);
+                if(matcher.find()) {
+                    productName = matcher.group(1);
+                    amount = matcher.group(2);
+                    price = Integer.parseInt(matcher.group(3));
+                    if(amount.equals("없음")) amount = "";
+                    else if(amount != null) amount = amount.replaceAll("\\s+", "");  // 용량 문자열 내의 모든 공백 제거
+                    if(productName.equals("없음")) productName = "";
+                    break;  // 정상적으로 문자열 추출이 되었으니, 반복문을 빠져나감.
+                }
+                // else : 대답 형식이 잘못되어 문자열 추출이 안되었으니, 다시 질문하여 결과 갱신.
+                attemptCnt++;
             }
-            // else : 대답 형식이 잘못되어 문자열 추출이 안되었으니, 다시 질문하여 결과 갱신.
-            attemptCnt++;
+            if(attemptCnt >= 20) throw new Exception500.ExternalServer("ChatGPT API 호출 에러 (호출 제한횟수 초과)");
+
+            ExternalDto.ChatgptImageProcessingResponse chatgptImageProcessingResponseDto = ExternalDto.ChatgptImageProcessingResponse.builder()
+                    .productName(productName)
+                    .price(price)
+                    .amount(amount)
+                    .build();
+
+            return chatgptImageProcessingResponseDto;
+        } finally {
+            // AWS S3 이미지 삭제 (finally 블록으로, 업로드한 이미지를 반드시 삭제.)
+            awsS3Service.deleteImage(imageFileUrl);
         }
-        if(attemptCnt >= 20) throw new Exception500.ExternalServer("ChatGPT API 호출 에러 (호출 제한횟수 초과)");
-
-        ExternalDto.ChatgptImageProcessingResponse chatgptImageProcessingResponseDto = ExternalDto.ChatgptImageProcessingResponse.builder()
-                .productName(productName)
-                .price(price)
-                .amount(amount)
-                .build();
-
-        // AWS S3 이미지 삭제
-        awsS3Service.deleteImage(imageFileUrl);
-
-        return chatgptImageProcessingResponseDto;
     }
 
     @Transactional
