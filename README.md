@@ -12,6 +12,25 @@
 <br>
 
 
+## 🔍 Introduction
+
+### Description
+물가가 치솟는 요즘, 장보기가 부담스럽진 않으신가요?<br>
+오프라인 매장의 "특가" 상품이 정말 최저가인지, 소비자의 의문을 해결하고자 합니다.<br>
+스마트카트가 오프라인과 온라인의 가격을 실시간으로 비교해 현명한 소비를 도와드립니다.
+
+### Main Feature
+- 소셜 로그인&nbsp;:&nbsp;&nbsp;Google, Naver, Kakao 계정으로 간편하게 로그인
+- 체크리스트&nbsp;:&nbsp;&nbsp;장 볼 항목을 손쉽게 관리
+- 스마트 렌즈&nbsp;:&nbsp;&nbsp;오프라인 매장의 가격표 촬영 후, 온라인 최저가와 비교 확인
+    - 1단계&nbsp;:&nbsp;&nbsp;ChatGPT Vision API - 촬영한 가격표의 '상품명, 용량, 가격' 추출
+    - 2단계&nbsp;:&nbsp;&nbsp;Naver Shopping API - 해당 상품의 온라인 최저가 목록 3곳 제공
+    - 3단계&nbsp;:&nbsp;&nbsp;ChatGPT Text API - 최저가 목록의 불필요한 내용을 깔끔히 정리
+- 장바구니&nbsp;:&nbsp;&nbsp;원하는 상품을 선택하여 담고, 총 결제 금액 및 절약 금액을 확인
+- 내 정보&nbsp;:&nbsp;&nbsp;스마트카트로 아낀 누적 절약 금액 확인
+<br>
+
+
 ## 💡 Tech Stack
 Frontend|Backend|Security&nbsp;&nbsp;&&nbsp;&nbsp;DB|Deployment|Other|
 |:------:|:------:|:------:|:------:|:------:|
