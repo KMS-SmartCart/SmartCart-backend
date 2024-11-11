@@ -118,14 +118,147 @@ ex) Feat: Security 및 OAuth2 구현
 
 ### Structure
 ```
-작성 중...
+## DevOps ##
+├── .ebextensions : AWS EB 환경 설정
+├── .github
+│   └── workflows : CI/CD 실행
+├── .gitmodules : Git 서브모듈 정의
+├── Dockerfile : 도커 이미지 빌드 설정
+├── Dockerrun.aws.json : 도커 컨테이너 EB 배포 설정
+└── submodule-backend : 배포용 properties 관리
+
++
+
+## Backend ##
+├── config
+├── controller
+├── service
+│   └── impl
+├── repository
+├── domain : Entity
+│   └── enums
+├── dto
+├── external : 외부 API 클라이언트
+├── response : API 응답, Exception 핸들러
+│   ├── responseitem
+│   └── exception
+├── security
+│   ├── jwt : 토큰 처리
+│   │   └── handler
+│   └── oauth2 : 소셜 로그인
+│       ├── handler
+│       └── userinfo
+└── util
 ```
 <details>
   <summary>&nbsp;<strong>Detailed Structure</strong>&nbsp;:&nbsp;Open!</summary>
   <br>
 
 ```
-작성 중...
+├── .ebextensions
+│   ├── 00-set-timezone.config
+│   └── 01-set-swapmemory.config
+├── .github
+│   └── workflows
+│       └── deploy.yml
+├── .gitmodules
+├── Dockerfile
+├── Dockerrun.aws.json
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com
+│   │   │       └── sajang
+│   │   │           └── smartcart_backend
+│   │   │               ├── SmartcartBackendApplication.java
+│   │   │               ├── config
+│   │   │               │   ├── AwsS3Config.java
+│   │   │               │   ├── SecurityConfig.java
+│   │   │               │   └── SwaggerConfig.java
+│   │   │               ├── controller
+│   │   │               │   ├── AuthController.java
+│   │   │               │   ├── CheckitemController.java
+│   │   │               │   ├── ProductController.java
+│   │   │               │   ├── TestController.java
+│   │   │               │   └── UserController.java
+│   │   │               ├── domain
+│   │   │               │   ├── Checkitem.java
+│   │   │               │   ├── Product.java
+│   │   │               │   ├── User.java
+│   │   │               │   ├── enums
+│   │   │               │   │   ├── Role.java
+│   │   │               │   │   └── SocialType.java
+│   │   │               ├── dto
+│   │   │               │   ├── AuthDto.java
+│   │   │               │   ├── CheckitemDto.java
+│   │   │               │   ├── ExternalDto.java
+│   │   │               │   ├── ProductDto.java
+│   │   │               │   └── UserDto.java
+│   │   │               ├── external
+│   │   │               │   ├── ChatgptClient.java
+│   │   │               │   └── NaverShoppingClient.java
+│   │   │               ├── repository
+│   │   │               │   ├── CheckitemRepository.java
+│   │   │               │   ├── CheckitemBatchRepository.java
+│   │   │               │   ├── ProductRepository.java
+│   │   │               │   ├── ProductBatchRepository.java
+│   │   │               │   └── UserRepository.java
+│   │   │               ├── response
+│   │   │               │   ├── GlobalExceptionHandler.java
+│   │   │               │   ├── ResponseCode.java
+│   │   │               │   ├── ResponseData.java
+│   │   │               │   ├── exception
+│   │   │               │   │   ├── CustomException.java
+│   │   │               │   │   ├── Exception400.java
+│   │   │               │   │   ├── Exception404.java
+│   │   │               │   │   └── Exception500.java
+│   │   │               │   └── responseitem
+│   │   │               │       ├── MessageItem.java
+│   │   │               │       └── StatusItem.java
+│   │   │               ├── security
+│   │   │               │   ├── jwt
+│   │   │               │   │   ├── JwtFilter.java
+│   │   │               │   │   ├── TokenProvider.java
+│   │   │               │   │   └── handler
+│   │   │               │   │       ├── JwtAccessDeniedHandler.java
+│   │   │               │   │       ├── JwtAuthenticationEntryPoint.java
+│   │   │               │   │       └── JwtExceptionFilter.java
+│   │   │               │   └── oauth2
+│   │   │               │       ├── CustomOAuth2User.java
+│   │   │               │       ├── CustomOAuth2UserService.java
+│   │   │               │       ├── OAuthAttributes.java
+│   │   │               │       ├── handler
+│   │   │               │       │   ├── OAuth2LoginFailureHandler.java
+│   │   │               │       │   └── OAuth2LoginSuccessHandler.java
+│   │   │               │       └── userinfo
+│   │   │               │           ├── GoogleOAuth2UserInfo.java
+│   │   │               │           ├── KakaoOAuth2UserInfo.java
+│   │   │               │           ├── NaverOAuth2UserInfo.java
+│   │   │               │           └── OAuth2UserInfo.java
+│   │   │               ├── service
+│   │   │               │   ├── AuthService.java
+│   │   │               │   ├── AwsS3Service.java
+│   │   │               │   ├── CheckitemService.java
+│   │   │               │   ├── ExternalService.java
+│   │   │               │   ├── ProductService.java
+│   │   │               │   ├── UserService.java
+│   │   │               │   └── impl
+│   │   │               │       ├── AuthServiceImpl.java
+│   │   │               │       ├── AwsS3ServiceImpl.java
+│   │   │               │       ├── CheckitemServiceImpl.java
+│   │   │               │       ├── ExternalServiceImpl.java
+│   │   │               │       ├── ProductServiceImpl.java
+│   │   │               │       └── UserServiceImpl.java
+│   │   │               └── util
+│   │   │                   ├── MultipartJackson2HttpMessageConverter.java
+│   │   │                   └── SecurityUtil.java
+│   │   └── resources
+│   │       ├── application-local.properties
+│   │       ├── application-secret.properties
+│   │       └── application.properties
+└── submodule-backend
+    ├── application-prod.properties
+    └── application-secret.properties
 ```
 </details>
 <br>
