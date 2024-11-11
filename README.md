@@ -48,8 +48,19 @@
 
 
 ## 📹 Demo
-작성 중...
-<br><br>
+사진 준비 중...
+
+**PWA 지원**|**소셜 로그인**|**체크리스트**
+-----|-----|-----
+<img src="https://github.com/user-attachments/assets/991ff17e-b3a8-4ec1-ad9d-dda8f268e679" width="100%">|<img src="https://github.com/user-attachments/assets/991ff17e-b3a8-4ec1-ad9d-dda8f268e679" width="100%">|<img src="https://github.com/user-attachments/assets/991ff17e-b3a8-4ec1-ad9d-dda8f268e679" width="100%">
+PWA 웹앱 설치|구글, 네이버, 카카오 계정|장 볼 항목 관리
+
+**스마트 렌즈**|**장바구니**|**내 정보**
+-----|-----|-----
+<img src="https://github.com/user-attachments/assets/991ff17e-b3a8-4ec1-ad9d-dda8f268e679" width="100%">|<img src="https://github.com/user-attachments/assets/991ff17e-b3a8-4ec1-ad9d-dda8f268e679" width="100%">|<img src="https://github.com/user-attachments/assets/991ff17e-b3a8-4ec1-ad9d-dda8f268e679" width="100%">
+가격표 촬영 & 최저가 비교|결제 금액 & 절약 금액|프로필 관리 & 누적 절약 금액
+
+<br>
 
 
 ## 💻 Architecture
