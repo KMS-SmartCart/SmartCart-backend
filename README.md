@@ -35,6 +35,7 @@
 스마트카트가 오프라인과 온라인의 가격을 실시간으로 비교해 현명한 소비를 도와드립니다.
 
 ### Main Feature
+- PWA 지원&nbsp;:&nbsp;&nbsp;웹 내에서 간편하게 앱을 설치할 수 있도록 안내
 - 소셜 로그인&nbsp;:&nbsp;&nbsp;Google, Naver, Kakao 계정으로 간편하게 로그인
 - 체크리스트&nbsp;:&nbsp;&nbsp;장 볼 항목을 손쉽게 관리
 - 스마트 렌즈&nbsp;:&nbsp;&nbsp;오프라인 매장의 가격표 촬영 후, 온라인 최저가와 비교 확인
