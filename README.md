@@ -5,10 +5,25 @@
   <img src="https://github.com/user-attachments/assets/8d7b601b-3f10-4bdd-85ab-f2e08e56193b" width="200" height="200" />
   <h3 align="center">Smart Cart&nbsp;&nbsp;🛒</h3>
   <p align="center">
-    마트 가격 비교 서비스<br>
+    온/오프라인 마트 최저가 비교 서비스<br>
     <a href="https://github.com/KMS-SmartCart"><strong>Explore the team »</strong></a>
   </p>
 </div>
+<br>
+
+<details open>
+  <summary><strong>&nbsp;📖&nbsp;목차</strong></summary>
+
+1. &nbsp;&nbsp;[🔍 Introduction](#-introduction)
+2. &nbsp;&nbsp;[📹 Demo](#-demo)
+4. &nbsp;&nbsp;[💻 Architecture](#-architecture)
+5. &nbsp;&nbsp;[💡 Tech Stack](#-tech-stack)
+6. &nbsp;&nbsp;[🗂️ Database](#%EF%B8%8F-database)
+7. &nbsp;&nbsp;[📗 API](#-api)
+8. &nbsp;&nbsp;[🤝 Git Convention](#-git-convention)
+9. &nbsp;&nbsp;[📂 Package Convention](#-package-convention)
+10. &nbsp;&nbsp;[👨‍👩‍👧‍👧 Team](#-team)
+</details>
 <br>
 
 
@@ -31,6 +46,22 @@
 <br>
 
 
+## 📹 Demo
+작성 중...
+<br><br>
+
+
+## 💻 Architecture
+
+### System
+![smartcart_architecture drawio](https://github.com/user-attachments/assets/92fe928c-42a9-4f15-b213-6ce955db42a9)
+
+### Network
+![smartcart_network_architecture drawio](https://github.com/user-attachments/assets/a4faeb21-c58f-477a-86ff-910c570f78ea)
+
+<br>
+
+
 ## 💡 Tech Stack
 Frontend|Backend|Security&nbsp;&nbsp;&&nbsp;&nbsp;DB|Deployment|Other|
 |:------:|:------:|:------:|:------:|:------:|
@@ -45,15 +76,14 @@ Frontend|Backend|Security&nbsp;&nbsp;&&nbsp;&nbsp;DB|Deployment|Other|
 <br>
 
 
-## 💻 Architecture
+## 🗂️ Database
+<img width="750" alt="smartcart_database" src="https://github.com/user-attachments/assets/135b09b6-9af7-4a5d-a656-efb10f652eb8">
+<br><br>
 
-### System
-![smartcart_architecture drawio](https://github.com/user-attachments/assets/341e7206-9ada-4a61-9478-4557f2959235)
 
-### Network
-![smartcart_network_architecture drawio](https://github.com/user-attachments/assets/a4faeb21-c58f-477a-86ff-910c570f78ea)
-
-<br>
+## 📗 API
+<img width="750" alt="smartcart_swagger_api" src="https://github.com/user-attachments/assets/2e028957-04b5-4b0a-a9a5-bdbb988cc97c">
+<br><br>
 
 
 ## 🤝 Git Convention
@@ -81,6 +111,23 @@ Frontend|Backend|Security&nbsp;&nbsp;&&nbsp;&nbsp;DB|Deployment|Other|
 Prefix_종류: 구현_내용
 ex) Feat: Security 및 OAuth2 구현
 ```
+<br>
+
+
+## 📂 Package Convention
+
+### Structure
+```
+작성 중...
+```
+<details>
+  <summary>&nbsp;<strong>Detailed Structure</strong>&nbsp;:&nbsp;Open!</summary>
+  <br>
+
+```
+작성 중...
+```
+</details>
 <br>
 
 
