@@ -48,16 +48,16 @@
 
 
 ## 📹 Demo
-사진 준비 중...
+<strong>📀&nbsp;&nbsp;Demo Video</strong>&nbsp;:&nbsp;&nbsp;<a href="https://youtu.be/idk-fZiWDyY">Play!</a><br>
 
 **PWA 지원**|**소셜 로그인**|**체크리스트**
 -----|-----|-----
-<img src="https://github.com/user-attachments/assets/991ff17e-b3a8-4ec1-ad9d-dda8f268e679" width="100%">|<img src="https://github.com/user-attachments/assets/991ff17e-b3a8-4ec1-ad9d-dda8f268e679" width="100%">|<img src="https://github.com/user-attachments/assets/991ff17e-b3a8-4ec1-ad9d-dda8f268e679" width="100%">
+<img src="https://github.com/user-attachments/assets/6d569a7c-511f-4c8d-a9da-298d3938f2c0" width="95%">|<img src="https://github.com/user-attachments/assets/ca0968e3-5089-4e24-9120-c33c544fb014" width="100%">|<img src="https://github.com/user-attachments/assets/eef22ed4-d420-4b1b-b88d-f799bff64de9" width="100%">
 PWA 웹앱 설치|구글, 네이버, 카카오 계정|장 볼 항목 관리
 
 **스마트 렌즈**|**장바구니**|**내 정보**
 -----|-----|-----
-<img src="https://github.com/user-attachments/assets/991ff17e-b3a8-4ec1-ad9d-dda8f268e679" width="100%">|<img src="https://github.com/user-attachments/assets/991ff17e-b3a8-4ec1-ad9d-dda8f268e679" width="100%">|<img src="https://github.com/user-attachments/assets/991ff17e-b3a8-4ec1-ad9d-dda8f268e679" width="100%">
+<img src="https://github.com/user-attachments/assets/d3c23a91-4726-4da1-a480-dd009df59556" width="100%">|<img src="https://github.com/user-attachments/assets/a2916be8-ac65-42a8-b446-f59e29bd7863" width="100%">|<img src="https://github.com/user-attachments/assets/cc789dbe-f02c-4c8a-a7a2-0c2ba5a1a66f" width="100%">
 가격표 촬영 & 최저가 비교|결제 금액 & 절약 금액|프로필 관리 & 누적 절약 금액
 
 <br>
